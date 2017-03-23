@@ -16,6 +16,7 @@ public class Downloader {
 
     /**
      * 开始下载任务
+     *
      * @param params
      * @return 下载任务
      */
@@ -33,22 +34,60 @@ public class Downloader {
         long id = DownloadRequestCache.getExistRequestId(context, url);
         //已经存在现在任务
         if (id != DownloadTask.INVALID_DOWNLOAD_ID && id > 0) {
-            String fileName = DownloadManagerQuery.getFileName(dm, id);
-            File file = new File(fileName);
-            //如果队列中存在任务，但是本地文件已经被删除，则移除队列id，清除缓存id
-            if (!file.exists() || !file.isFile()) {
-                removeDownloadTask(context, params.mUrl, id);
-                DownloadRequestCache.setRequestId(context, url, DownloadTask.INVALID_DOWNLOAD_ID);
-                //重新入队请求
+            boolean isTaskValid = isExistTaskIdValid(dm,id);
+            //如果任务无效，则重新入队下载任务
+            if(!isTaskValid){
                 id = dm.enqueue(params.build());
                 DownloadRequestCache.setRequestId(context, url, id);
             }
+//
+//            String fileName = DownloadManagerQuery.getFileName(dm, id);
+//            File file = new File(fileName);
+//            //如果队列中存在任务，但是本地文件已经被删除，则移除队列id，清除缓存id
+//            if (!file.exists() || !file.isFile()) {
+//                removeDownloadTask(context, params.mUrl, id);
+//                DownloadRequestCache.setRequestId(context, url, DownloadTask.INVALID_DOWNLOAD_ID);
+//                //重新入队请求
+//                id = dm.enqueue(params.build());
+//                DownloadRequestCache.setRequestId(context, url, id);
+//            }
         } else {
             //任务入队执行
             id = dm.enqueue(params.build());
             DownloadRequestCache.setRequestId(context, url, id);
         }
         return new DownloadTask(dm, id, params, listener);
+    }
+
+    /**
+     * 存在的任务id是否有效
+     * @param dm
+     * @param id
+     * @return
+     */
+    private static boolean isExistTaskIdValid(DownloadManager dm, long id) {
+        String fileName = DownloadManagerQuery.getFileName(dm, id);
+        File file = new File(fileName);
+        //如果任务id存在，文件不存在，则说明文件已被删除
+        if (!file.exists() || !file.isFile()) {
+            return false;
+        }
+
+        int status = DownloadManagerQuery.getStatusById(dm, id);
+        //如果任务处于暂停中，尝试继续下载
+        if (status == DownloadTask.TaskStatus.PAUSED) {
+            try {
+                DownloadManagerQuery.resumeDownload(dm, id);
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        } else {
+            //状态为错误或失败则是不可用任务
+            return (status != DownloadTask.TaskStatus.ERROR_TASK && status != DownloadTask.TaskStatus.FAILED);
+        }
+
     }
 
 
