@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MultiStateView">
+        <!--内容布局-->
+        <attr name="contentLayout" format="reference" />
+        <!--是否自动加载-->
+        <attr name="autoLoadContentLayout" format="boolean" />
+        <!--loading布局-->
+        <attr name="loadingLayout" format="reference" />
+        <attr name="autoLoadLoadingLayout" format="boolean" />
+        <!--空内容布局-->
+        <attr name="emptyLayout" format="reference" />
+        <attr name="autoLoadEmptyLayout" format="boolean" />
+        <!--错误内容布局-->
+        <attr name="errorLayout" format="reference" />
+        <attr name="autoLoadErrorLayout" format="boolean" />
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--api 19 透明状态栏，在decorview下添加的伪装状态栏id-->
+    <item name="fake_status_bar_id_19" type="id" />
+
+</resources>

@@ -1,0 +1,73 @@
+<resources>
+
+    <style name="EasyTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!--无ActionBar-->
+    <style name="EasyTheme.NoActionBar" parent="EasyTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--无actionbar 全屏-->
+    <style name="EasyTheme.NoActionBar.FullScreen" parent="EasyTheme.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!--透明主题状态栏主题-->
+    <style name="EasyTheme.NoActionBar.TranslucentBar" parent="EasyTheme.NoActionBar">
+    </style>
+
+
+    <style name="Text">
+
+    </style>
+
+    <!--黑色文本-->
+    <style name="Text.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Text.Black.Body" parent="Text.Black">
+        <item name="android:textSize">@dimen/font_text</item>
+    </style>
+
+    <style name="Text.Black.Caption" parent="Text.Black">
+        <item name="android:textSize">@dimen/font_caption</item>
+    </style>
+
+    <!--白色文本-->
+    <style name="Text.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Text.White.Body" parent="Text.White">
+        <item name="android:textSize">@dimen/font_text</item>
+    </style>
+
+    <style name="Text.White.Caption" parent="Text.White">
+        <item name="android:textSize">@dimen/font_caption</item>
+    </style>
+
+    <style name="Text.White.Title" parent="Text.White">
+        <item name="android:textSize">@dimen/font_title</item>
+    </style>
+
+    <!--灰色文本-->
+    <style name="Text.Gray">
+        <item name="android:textColor">@color/gray_text</item>
+    </style>
+
+    <style name="Text.Gray.Body" parent="Text.Gray">
+        <item name="android:textSize">@dimen/font_text</item>
+    </style>
+
+    <style name="Text.Gray.Caption" parent="Text.Gray">
+        <item name="android:textSize">@dimen/font_caption</item>
+    </style>
+
+</resources>
