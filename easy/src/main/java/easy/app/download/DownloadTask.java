@@ -187,6 +187,9 @@ public class DownloadTask {
                         int downloaded = msg.arg1;
                         if (mListener != null) {
                             mListener.onDownloadChanged(status, max, downloaded);
+                            if(status == TaskStatus.SUCCESS){
+                                mListener.onDownloadSuccess(DownloadManagerQuery.getFileName(mDm,mId));
+                            }
                         }
                         break;
                     case UPDATE_STATUS:

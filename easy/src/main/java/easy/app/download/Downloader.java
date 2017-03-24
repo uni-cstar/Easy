@@ -16,6 +16,14 @@ public class Downloader {
 
     /**
      * 开始下载任务
+     * <p>
+     * 需求权限：
+     * //Normal Permissions
+     * <uses-permission android:name="android.permission.INTERNET"/>
+     * //Dangerous Permissions:
+     * <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+     * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+     * </p>
      *
      * @param params
      * @return 下载任务
@@ -34,9 +42,9 @@ public class Downloader {
         long id = DownloadRequestCache.getExistRequestId(context, url);
         //已经存在现在任务
         if (id != DownloadTask.INVALID_DOWNLOAD_ID && id > 0) {
-            boolean isTaskValid = isExistTaskIdValid(dm,id);
+            boolean isTaskValid = isExistTaskIdValid(dm, id);
             //如果任务无效，则重新入队下载任务
-            if(!isTaskValid){
+            if (!isTaskValid) {
                 id = dm.enqueue(params.build());
                 DownloadRequestCache.setRequestId(context, url, id);
             }
@@ -61,6 +69,7 @@ public class Downloader {
 
     /**
      * 存在的任务id是否有效
+     *
      * @param dm
      * @param id
      * @return
