@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 
 import java.io.File;
 
@@ -45,26 +46,46 @@ public class Downloader {
             boolean isTaskValid = isExistTaskIdValid(dm, id);
             //如果任务无效，则重新入队下载任务
             if (!isTaskValid) {
+                //移除任务
+                dm.remove(id);
+                DownloadRequestCache.clearRequestId(context, url);
+                //入队任务
                 id = dm.enqueue(params.build());
                 DownloadRequestCache.setRequestId(context, url, id);
             }
-//
-//            String fileName = DownloadManagerQuery.getFileName(dm, id);
-//            File file = new File(fileName);
-//            //如果队列中存在任务，但是本地文件已经被删除，则移除队列id，清除缓存id
-//            if (!file.exists() || !file.isFile()) {
-//                removeDownloadTask(context, params.mUrl, id);
-//                DownloadRequestCache.setRequestId(context, url, DownloadTask.INVALID_DOWNLOAD_ID);
-//                //重新入队请求
-//                id = dm.enqueue(params.build());
-//                DownloadRequestCache.setRequestId(context, url, id);
-//            }
         } else {
             //任务入队执行
             id = dm.enqueue(params.build());
             DownloadRequestCache.setRequestId(context, url, id);
         }
         return new DownloadTask(dm, id, params, listener);
+    }
+
+    /**
+     * 下载任务是否已完成(并且本地文件存在)
+     *
+     * @param context
+     * @param params
+     * @return
+     */
+    public static boolean isDownTaskSuccess(Context context, DownloadTask.DownloadRequestParams params) {
+        String filePath = Environment.getExternalStoragePublicDirectory(params.mDir).toString();
+        filePath = filePath + File.separator + params.mFileName;
+        File file = new File(filePath);
+        //本地路径文件不存在，则任务肯定不成功
+        if (!file.exists() || !file.isFile()) {
+            return false;
+        } else {
+            DownloadManager dm = (DownloadManager) context.getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            long id = DownloadRequestCache.getExistRequestId(context, params.mUrl);
+            //下载管理器存在对应任务
+            if (id != DownloadTask.INVALID_DOWNLOAD_ID && id > 0) {
+                //判断任务管理器中状态是否已成功
+                return DownloadManagerQuery.isDownloadSuccess(dm, id);
+            } else {
+                return true;
+            }
+        }
     }
 
     /**
@@ -109,7 +130,7 @@ public class Downloader {
     public static void removeDownloadTask(Context context, String url, long id) {
         DownloadManager dm = (DownloadManager) context.getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
         dm.remove(id);
-        DownloadRequestCache.setRequestId(context, url, id);
+        DownloadRequestCache.clearRequestId(context, url);
     }
 
 
@@ -168,6 +189,19 @@ public class Downloader {
             SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putLong(url, id);
+            editor.apply();
+        }
+
+        /**
+         * 清理
+         *
+         * @param context
+         * @param url
+         */
+        public static void clearRequestId(Context context, String url) {
+            SharedPreferences sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.remove(url);
             editor.apply();
         }
     }

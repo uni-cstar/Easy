@@ -425,6 +425,15 @@ public class DownloadTask {
             return request;
         }
 
+        /**
+         * 获取文件路径
+         * @return
+         */
+        public String getFilePath(){
+            String filePath = Environment.getExternalStoragePublicDirectory(mDir).getPath();
+            return filePath + File.separator + mFileName;
+        }
+
 
         /**
          * 返回mimetype
