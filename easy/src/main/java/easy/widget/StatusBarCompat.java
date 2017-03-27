@@ -86,6 +86,7 @@ public final class StatusBarCompat {
     /**
      * 修正android.R.id.content包含的布局参数
      */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private static void fixContentGroupParams(Activity activity) {
         ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
         for (int i = 0, count = parent.getChildCount(); i < count; i++) {

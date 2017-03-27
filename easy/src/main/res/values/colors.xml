@@ -8,5 +8,8 @@
     <color name="white">@android:color/white</color>
     <color name="transparent">@android:color/transparent</color>
 
-    <color name="gray_text">#cccccc</color>
+    <color name="gray_text">#888888</color>
+
+    <color name="light_gray">#cccccc</color>
+
 </resources>

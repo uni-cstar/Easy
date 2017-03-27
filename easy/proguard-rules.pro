@@ -133,10 +133,12 @@
     public *;
     protected *;
 }
+
 -keep class easy.app.download.*{
-     public *;
-     protected *;
+    public *;
+    protected *;
 }
+
 -keep class easy.text.TextUtils{
     *;
 }
