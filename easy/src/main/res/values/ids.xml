@@ -3,4 +3,6 @@
     <!--api 19 透明状态栏，在decorview下添加的伪装状态栏id-->
     <item name="fake_status_bar_id_19" type="id" />
 
+    <item name="easy_quick_vh_tag" type="id" />
+
 </resources>

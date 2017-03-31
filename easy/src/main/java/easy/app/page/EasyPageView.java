@@ -9,10 +9,9 @@ import android.view.animation.AnimationUtils;
 
 /**
  * Created by Lucio on 17/3/10.
+ * page view的简易实现
  */
-
 public class EasyPageView implements MultiStateView.PageView {
-
 
     protected Context mContext;
     protected View mContentView;

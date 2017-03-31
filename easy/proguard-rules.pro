@@ -124,21 +124,22 @@
 
 ##############以下为自定义配置规则#######################
 
-#保持透明状态栏类和所有public static方法
--keep class easy.widget.StatusBarCompat{
-    public <methods>;
-}
+##保持透明状态栏类和所有public static方法
+#-keep class easy.widget.StatusBarCompat{
+#    public <methods>;
+#}
+#
+#-keep class easy.app.page.*{
+#    public *;
+#    protected *;
+#}
+#
+#-keep public class easy.app.download.*{
+#    public *;
+#    protected *;
+#}
 
--keep class easy.app.page.*{
+-keep public class easy.**{
     public *;
     protected *;
-}
-
--keep class easy.app.download.*{
-    public *;
-    protected *;
-}
-
--keep class easy.text.TextUtils{
-    *;
 }

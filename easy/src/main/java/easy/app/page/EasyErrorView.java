@@ -10,6 +10,7 @@ import easy.R;
 
 /**
  * Created by Lucio on 17/3/13.
+ * 简易的error view
  */
 
 public class EasyErrorView extends EasyPageView {

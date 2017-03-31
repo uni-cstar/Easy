@@ -6,6 +6,7 @@ import easy.R;
 
 /**
  * Created by Lucio on 17/3/13.
+ * 简易的loading view
  */
 
 public class EasyLoadingView extends EasyPageView {
