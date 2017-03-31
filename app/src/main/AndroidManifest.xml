@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DownloadSampleActivity"></activity>
+        <activity android:name=".DownloadSampleActivity" />
+        <activity android:name=".skin.SkinSampleActivity"></activity>
     </application>
 
 </manifest>
