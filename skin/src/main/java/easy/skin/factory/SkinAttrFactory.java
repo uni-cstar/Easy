@@ -2,6 +2,7 @@ package easy.skin.factory;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
@@ -10,12 +11,30 @@ import java.util.List;
 import easy.skin.attr.SkinAttr;
 import easy.skin.attr.SkinAttrSupport;
 
+
 /**
  * Created by Lucio on 17/3/31.
  * 属性创造工厂
  */
 
 public abstract class SkinAttrFactory {
+
+    /**
+     * 前缀属性过滤工厂
+     * @param prefix 前缀 ，为空时使用{@link PrefixSkinAttrFactory#DEFAULT_PREFIX}做为默认
+     * @return
+     */
+    public static SkinAttrFactory createPrefixFactory(@Nullable String prefix){
+        return new PrefixSkinAttrFactory(prefix);
+    }
+
+    /**
+     * 创建命名空间属性工厂
+     * @return
+     */
+    public static SkinAttrFactory createNamespaceFactory(){
+        return new NamespaceSkinAttrFactory();
+    }
 
     public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {
         List<SkinAttr> skinAttrs = new ArrayList<>();

@@ -20,6 +20,7 @@ import java.util.Map;
 
 import easy.skin.attr.SkinAttr;
 import easy.skin.impl.SkinChangedListener;
+import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/3/30.
@@ -42,7 +43,14 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener 
      */
     private boolean mEnableSkinSwitchAnim;
 
-    ViewProducer mViewProducer;
+    /**
+     * 是否总是有切换动画
+     * true：总是有切换动画
+     * false:如果控件属性没有更改，则不进行动画
+     */
+    private boolean mIsSkinSwitchAnimAlways;
+
+    private ViewProducer mViewProducer;
 
     public SkinDelegate(AppCompatActivity context) {
         this(context, false);
@@ -53,6 +61,7 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener 
         mEnableStatusBarColor = enableStatusBarColor;
         mViewProducer = new ViewProducer();
         mEnableSkinSwitchAnim = true;//默认允许主题切换动画
+        mIsSkinSwitchAnimAlways = false;//默认控件属性无变化时不执行动画
     }
 
     /**
@@ -78,6 +87,24 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener 
      */
     public void onDestroy() {
         SkinManager.getInstance().removeSkinChangedListener(this);
+    }
+
+    /**
+     * 设置是否启用主题切换的动画
+     * 默认开启
+     * @param mEnableSkinSwitchAnim
+     */
+    public void setEnableSkinSwitchAnim(boolean mEnableSkinSwitchAnim) {
+        this.mEnableSkinSwitchAnim = mEnableSkinSwitchAnim;
+    }
+
+    /**
+     * 设置是否在view属性没有改变时是否也有动画切换
+     * 默认关闭
+     * @param mIsSkinSwitchAnimAlways
+     */
+    public void setIsSkinSwitchAnimAlways(boolean mIsSkinSwitchAnimAlways) {
+        this.mIsSkinSwitchAnimAlways = mIsSkinSwitchAnimAlways;
     }
 
     /**
@@ -114,9 +141,17 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener 
             if (view == null) {
                 continue;
             }
-            if (animation != null)
+
+            if(mIsSkinSwitchAnimAlways){
+                if (animation != null)
+                    view.startAnimation(animation);
+            }
+            boolean changed = mSkinViewMap.get(view).apply();
+
+            //根据属性是否改变来确定是否展示动画
+            if(!mIsSkinSwitchAnimAlways && changed && animation != null){
                 view.startAnimation(animation);
-            mSkinViewMap.get(view).apply();
+            }
         }
     }
 
@@ -124,7 +159,7 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener 
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         try {
             List<SkinAttr> skinAttrs = SkinManager.getInstance().getSkinAttrFactory().getSkinAttrs(attrs, context);
-            if (skinAttrs == null || skinAttrs.size() == 0) {
+            if (SkinUtil.isNullOrEmpty(skinAttrs)) {
 //            AppCompatDelegate delegate = mActivity.getDelegate();
 //            return delegate.tryCreateView(parent, name, context, attrs);
                 return null;

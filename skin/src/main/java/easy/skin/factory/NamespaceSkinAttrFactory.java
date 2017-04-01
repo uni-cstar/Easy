@@ -11,16 +11,14 @@ import easy.skin.attr.SkinAttr;
  * Created by Lucio on 17/3/31.
  * 命名空间属性工厂
  */
-public class NamespaceSkinAttrFactory extends SkinAttrFactory {
+class NamespaceSkinAttrFactory extends SkinAttrFactory {
 
     //命名空间 在布局文件中申明
     public static final String NAMESPACE = "http://schemas.android.com/android/skin";
     //属性 eg: skin:enable="true"
     public static final String ATTR_SKIN_ENABLE = "enable";
 
-    public static NamespaceSkinAttrFactory create() {
-        return new NamespaceSkinAttrFactory();
-    }
+    NamespaceSkinAttrFactory(){}
 
     @Override
     public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {

@@ -1,5 +1,6 @@
 package easy.skin.attr;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -7,14 +8,19 @@ import easy.skin.SkinManager;
 
 /**
  * Created by Lucio on 17/3/31.
+ * src属性处理器
  */
-
-public class SrcAttr extends SkinAttr {
+class SrcAttr extends SkinAttr {
     @Override
-    public void apply(View view) {
+    public boolean apply(View view) {
         if (view instanceof ImageView) {
             ImageView iv = (ImageView) view;
-            iv.setImageDrawable(SkinManager.getInstance().getResourceManager().getDrawable(attrValueRefName));
+            Drawable drawable = SkinManager.getInstance().getResourceManager().getDrawable(attrValueRefName);
+            if(drawable == null && SkinAttrSupport.isIgnoreWhenAttrNotFound())
+                return false;
+            iv.setImageDrawable(drawable);
+            return true;
         }
+        return false;
     }
 }

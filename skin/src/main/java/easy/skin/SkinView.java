@@ -21,11 +21,21 @@ public class SkinView {
         this.attrs = skinAttrs;
     }
 
-    public void apply() {
-        if (view == null || SkinUtil.isNullOrEmpty(attrs)) return;
+    /**
+     * @return true:更改了属性
+     * false:没有更改属性
+     */
+    public boolean apply() {
+        if (view == null || SkinUtil.isNullOrEmpty(attrs)) return false;
+
+        boolean result = false;
+
         for (SkinAttr attr : attrs) {
-            attr.apply(view);
+            if(attr.apply(view)){
+                result = true;
+            }
         }
+        return result;
     }
 }
 

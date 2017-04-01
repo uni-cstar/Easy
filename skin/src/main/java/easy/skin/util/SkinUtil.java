@@ -28,4 +28,8 @@ public class SkinUtil {
     public static boolean isNullOrEmpty(List sourceList) {
         return (sourceList == null || sourceList.size() == 0);
     }
+
+    public static boolean isNullOrEmpty(String content){
+        return content == null || content.length() == 0;
+    }
 }

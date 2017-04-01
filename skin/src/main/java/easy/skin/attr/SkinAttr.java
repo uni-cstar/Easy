@@ -39,8 +39,10 @@ public abstract class SkinAttr implements Cloneable {
      * 应用属性
      *
      * @param view
+     * @return true:更改了属性
+     * false:没有更改属性
      */
-    public abstract void apply(View view);
+    public abstract boolean apply(View view);
 
     @Override
     public SkinAttr clone() {

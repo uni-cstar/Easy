@@ -8,15 +8,36 @@ import java.util.HashMap;
  */
 public class SkinAttrSupport {
 
+    public static final String DEF_SUPPORT_ATTR_BACKGROUND="background";
+    public static final String DEF_SUPPORT_ATTR_TEXTCOLOR="textColor";
+    public static final String DEF_SUPPORT_ATTR_SRC="src";
     /**
      * 支持的属性
      */
-    private static HashMap<String, SkinAttr> sSupportAttr = new HashMap<>();
+    private static HashMap<String, SkinAttr> mSupportAttrs = new HashMap<>();
+
+    private static boolean ignoreWhenAttrNotFound = true;
 
     static {
-        sSupportAttr.put("background", new BackgroundAttr());
-        sSupportAttr.put("textColor", new TextColorAttr());
-        sSupportAttr.put("src", new SrcAttr());
+        mSupportAttrs.put(DEF_SUPPORT_ATTR_BACKGROUND, new BackgroundAttr());
+        mSupportAttrs.put(DEF_SUPPORT_ATTR_TEXTCOLOR, new TextColorAttr());
+        mSupportAttrs.put(DEF_SUPPORT_ATTR_SRC, new SrcAttr());
+    }
+
+    public static boolean isIgnoreWhenAttrNotFound(){
+        return ignoreWhenAttrNotFound;
+    }
+
+    /**
+     * 设置资源未找到时是否忽略设置控件对应值。
+     * PS:比如一个TextView是需要进行皮肤切换的，
+     * 但是切换的时候找不到对应的资源，哪么这个时候得到的资源ID为0，
+     * 如果还是将结果设置给TextView的话，会导致取消TextView的一些默认效果，
+     * 设置为True将会忽略资源不存在的结果。
+     * @param ignore
+     */
+    public static void setIgnoreWhenAttrNotFound(boolean ignore){
+        ignoreWhenAttrNotFound = ignore;
     }
 
     /**
@@ -28,7 +49,7 @@ public class SkinAttrSupport {
      * @return
      */
     public static SkinAttr genSkinAttr(String attrName, String attrValueRefName, String typeName) {
-        SkinAttr mSkinAttr = sSupportAttr.get(attrName).clone();
+        SkinAttr mSkinAttr = mSupportAttrs.get(attrName).clone();
         if (mSkinAttr == null) return null;
         mSkinAttr.attrName = attrName;
         mSkinAttr.attrValueRefName = attrValueRefName;
@@ -45,7 +66,7 @@ public class SkinAttrSupport {
      * false: false 不支持
      */
     public static boolean isSupportedAttr(String attrName) {
-        return sSupportAttr.containsKey(attrName);
+        return mSupportAttrs.containsKey(attrName);
     }
 
     /**
@@ -55,7 +76,7 @@ public class SkinAttrSupport {
      * @param skinAttr 属性实现类
      */
     public static void addSupportAttr(String attrName, SkinAttr skinAttr) {
-        sSupportAttr.put(attrName, skinAttr);
+        mSupportAttrs.put(attrName, skinAttr);
     }
 
     /**
@@ -63,6 +84,6 @@ public class SkinAttrSupport {
      * @param attrName 属性名字
      */
     public static void removeSupport(String attrName){
-        sSupportAttr.remove(attrName);
+        mSupportAttrs.remove(attrName);
     }
 }

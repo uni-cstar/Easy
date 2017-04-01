@@ -10,23 +10,30 @@ import java.util.List;
 
 import easy.skin.attr.SkinAttr;
 import easy.skin.attr.SkinAttrSupport;
+import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/3/31.
  * 前缀属性工厂
  */
 
-public class PrefixSkinAttrFactory extends SkinAttrFactory {
+class PrefixSkinAttrFactory extends SkinAttrFactory {
+
+    /**
+     * 默认前缀
+     */
+    static final String DEFAULT_PREFIX = "skin";
 
     private String mPrefix;
 
-    private PrefixSkinAttrFactory(String prefix) {
-        mPrefix = prefix;
+    PrefixSkinAttrFactory(String prefix) {
+        mPrefix = SkinUtil.isNullOrEmpty(prefix) ? DEFAULT_PREFIX : prefix;
     }
 
-    public static PrefixSkinAttrFactory create(String prefix) {
-        return new PrefixSkinAttrFactory(prefix);
+    PrefixSkinAttrFactory() {
+        this(DEFAULT_PREFIX);
     }
+
 //
 //    @Override
 //    public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {

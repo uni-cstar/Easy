@@ -7,19 +7,16 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import easy.skin.factory.NamespaceSkinAttrFactory;
-import easy.skin.factory.PrefixSkinAttrFactory;
 import easy.skin.factory.SkinAttrFactory;
 import easy.skin.impl.SkinChangedListener;
 import easy.skin.impl.SkinCompatImpl;
 import easy.skin.impl.SkinLoadListener;
 import easy.skin.util.SkinPrefUtil;
+import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/3/30.
@@ -35,7 +32,6 @@ import easy.skin.util.SkinPrefUtil;
  * 触发{@link #notifySkinChangedListeners()}
  * </p>
  */
-
 public class SkinManager {
 
     private Context mContext;
@@ -53,7 +49,12 @@ public class SkinManager {
      * 资源
      */
     private Resources mResources;
+
+    /**
+     * 资源管理者（提供资源解析）
+     */
     private ResourceManager mResourceManager;
+
     /**
      * 皮肤包名
      */
@@ -68,16 +69,25 @@ public class SkinManager {
      */
     private String mSkinSuffix;
 
-    private boolean mIsUseSkinPlugin;
+    /**
+     * 是否存在皮肤切换
+     */
+    private boolean mIsUseSkinPlugin,mIsInit;
 
+    /**
+     * 皮肤 preferences，保存一些常量
+     */
     SkinPrefUtil mPrefUtils;
 
-
+    /**
+     * 回调
+     */
     private List<SkinChangedListener> mSkinChangedListeners;
 
     private SkinManager() {
         mSkinCompat = new SkinCompatDef();
-        mSkinAttrFactory = PrefixSkinAttrFactory.create("skin");
+//        mSkinAttrFactory = PrefixSkinAttrFactory.create("skin");
+//        mSkinAttrFactory = NamespaceSkinAttrFactory.create();
     }
 
     //singleton
@@ -90,15 +100,17 @@ public class SkinManager {
         return SingletonHolder.instance;
     }
 
+    private void checkInit(){
+        if(!mIsInit)
+            throw new RuntimeException("Please call the init method ");
+    }
     /**
      * 获取资源管理器
      *
      * @return
      */
     public ResourceManager getResourceManager() {
-//        if (!mIsUseSkinPlugin) {
-//            mResourceManager = new ResourceManager(mContext,mContext.getResources(), mContext.getPackageName(), mSkinSuffix);
-//        }
+        checkInit();
         return mResourceManager;
     }
 
@@ -108,16 +120,19 @@ public class SkinManager {
      * @return
      */
     public SkinAttrFactory getSkinAttrFactory() {
+        checkInit();
         return mSkinAttrFactory;
     }
 
     /**
      * 设置属性解析工厂
+     *
      * @param attrFactory
      */
-    public void setSkinAttrFactory(SkinAttrFactory attrFactory){
+    public void setSkinAttrFactory(SkinAttrFactory attrFactory) {
         mSkinAttrFactory = attrFactory;
     }
+
     /**
      * 初始化
      * 建议在{@link Application#onCreate()}处进行调用
@@ -126,11 +141,16 @@ public class SkinManager {
      */
     public void init(Context context) {
         mContext = context.getApplicationContext();
-        mResourceManager = new ResourceManager(mContext,mContext.getResources(), mContext.getPackageName(), "");
+        mSkinAttrFactory = SkinAttrFactory.createPrefixFactory(null);
+        //默认使用命名空间解析方式
+//        mSkinAttrFactory = NamespaceSkinAttrFactory.create();
+        //默认资源管理器
+        mResourceManager = new ResourceManager(mContext, mContext.getResources(), mContext.getPackageName(), "");
         mPrefUtils = new SkinPrefUtil(mContext);
-
+        //设置初始化标记
+        mIsInit = true;
         String skinPluginPath = mPrefUtils.getPluginPath();
-        if (TextUtils.isEmpty(skinPluginPath))
+        if (SkinUtil.isNullOrEmpty(skinPluginPath))
             return;
         String skinPluginPkg = mPrefUtils.getPluginPkgName();
         String suffix = mPrefUtils.getSuffix();
@@ -157,7 +177,7 @@ public class SkinManager {
         AssetManager assetManager = mSkinCompat.createAssetManager(apkPath);
         Resources superRes = mContext.getResources();
         mResources = mSkinCompat.createResources(assetManager, superRes);
-        mResourceManager = new ResourceManager(mContext,mResources, pkgName, suffix);
+        mResourceManager = new ResourceManager(mContext, mResources, pkgName, suffix);
         updateSkinInfo(apkPath, pkgName, suffix);
     }
 
@@ -167,9 +187,9 @@ public class SkinManager {
      * @param apkPath 插件包所在路径
      * @throws Exception
      */
-    private void loadSkinPlugin(String apkPath,String suffix) throws Exception {
+    private void loadSkinPlugin(String apkPath, String suffix) throws Exception {
         String packName = mSkinCompat.getPackageName(mContext, apkPath);
-        loadSkinPlugin(apkPath, packName,suffix);
+        loadSkinPlugin(apkPath, packName, suffix);
     }
 
     /**
@@ -203,21 +223,23 @@ public class SkinManager {
     /**
      * 是否使用皮肤
      * 是否使用插件或者更改了资源后缀
+     *
      * @return
      */
     public boolean isUseSkin() {
-        return mIsUseSkinPlugin || !TextUtils.isEmpty(mSkinSuffix);
+        return mIsUseSkinPlugin || !SkinUtil.isNullOrEmpty(mSkinSuffix);
     }
 
     /**
      * 还原到默认的皮肤
      */
     public void restoreDefaultSkin() {
+        checkInit();
         clearSkinInfo();
         mResources = mContext.getResources();
         mSkinPackageName = mContext.getPackageName();
         //重置资源管理器
-        mResourceManager.update(mContext,mResources, mSkinPackageName, mSkinSuffix);
+        mResourceManager.update(mContext, mResources, mSkinPackageName, mSkinSuffix);
         notifySkinChangedListeners();
     }
 
@@ -227,6 +249,7 @@ public class SkinManager {
      * @param suffix
      */
     public void changeSkin(String suffix) {
+        checkInit();
         mSkinSuffix = suffix;
         mResourceManager.setSuffix(mSkinSuffix);
         mPrefUtils.putPluginSuffix(mSkinSuffix);
@@ -235,11 +258,13 @@ public class SkinManager {
 
     /**
      * 加载皮肤
+     *
      * @param skinPath 皮肤路径
      * @param listener
      */
-    public void loadSkin(String skinPath, final SkinLoadListener listener){
-        loadSkin(skinPath,"",listener);
+    public void loadSkin(String skinPath, final SkinLoadListener listener) {
+        checkInit();
+        loadSkin(skinPath, "", listener);
     }
 
     /**
@@ -249,13 +274,13 @@ public class SkinManager {
      * </p>
      *
      * @param skinPath 皮肤路径
-     * @param suffix 资源后缀
+     * @param suffix   资源后缀
      * @param listener 回调
      */
-    public void loadSkin(String skinPath, @Nullable final String suffix , final SkinLoadListener listener) {
-
+    public void loadSkin(String skinPath, @Nullable final String suffix, final SkinLoadListener listener) {
+        checkInit();
         //路径为空
-        if (TextUtils.isEmpty(skinPath)) {
+        if (SkinUtil.isNullOrEmpty(skinPath)) {
             if (listener != null) {
                 listener.onSkinLoadFailed(new IllegalArgumentException("skinPath can not be empty!"));
             }
@@ -291,7 +316,7 @@ public class SkinManager {
             protected Exception doInBackground(String... params) {
                 try {
                     if (params.length == 1) {
-                        loadSkinPlugin(params[0],suffix);
+                        loadSkinPlugin(params[0], suffix);
                         return null;
                     }
                     return new IllegalArgumentException("invalid arguments!");
@@ -354,6 +379,7 @@ public class SkinManager {
      * 通知皮肤切换
      */
     public void notifySkinChangedListeners() {
+        checkInit();
         if (mSkinChangedListeners == null) return;
         for (SkinChangedListener listener : mSkinChangedListeners) {
             listener.onSkinChanged();

@@ -6,9 +6,9 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 
 import easy.skin.attr.SkinAttr;
+import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/3/31.
@@ -61,6 +61,9 @@ public class ResourceManager {
     private int getColor2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_COLOR, mPluginPackageName);
+            if(resId == 0)
+                return 0;
+
             int color = 0;
             if (Build.VERSION.SDK_INT >= 23) {
                 color = mResources.getColor(resId, null);
@@ -96,6 +99,8 @@ public class ResourceManager {
     private ColorStateList getColorStateList2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_COLOR, mPluginPackageName);
+            if(resId == 0)
+                return null;
             ColorStateList result = null;
             if (Build.VERSION.SDK_INT >= 23) {
                 result = mResources.getColorStateList(resId, null);
@@ -137,13 +142,14 @@ public class ResourceManager {
                 resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_COLOR, mPluginPackageName);
             }
 
+            if(resId == 0)
+                return null;
+
             Drawable result = null;
-            if(resId != 0){
-                if (Build.VERSION.SDK_INT >= 21) {
-                    result = mResources.getDrawable(resId, null);
-                } else {
-                    result = mResources.getDrawable(resId);
-                }
+            if (Build.VERSION.SDK_INT >= 21) {
+                result = mResources.getDrawable(resId, null);
+            } else {
+                result = mResources.getDrawable(resId);
             }
 
             if(result == null){
@@ -157,7 +163,7 @@ public class ResourceManager {
     }
 
     private String appendSuffix(String name) {
-        if (!TextUtils.isEmpty(mSuffix))
+        if (!SkinUtil.isNullOrEmpty(mSuffix))
             return name + "_" + mSuffix;
         return name;
     }
