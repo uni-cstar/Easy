@@ -2,7 +2,7 @@
   Skin是一款提供在Android开发中实现动态快速切换皮肤的库。
 
   ## 感谢
-  Skin是站在巨人的肩膀上，其核心思想来源于[Android-Skin-Loader](https://github.com/SupLuo/Android-Skin-Loader)，并且借用了洪洋[地址](https://github.com/hongyangAndroid/ChangeSkin)通过后缀切换属性的思路。
+  Skin是站在巨人的肩膀上，其核心思想来源于[Android-Skin-Loader](https://github.com/SupLuo/Android-Skin-Loader)，并且借用了洪洋（[地址](https://github.com/hongyangAndroid/ChangeSkin)）通过后缀切换属性的思路。
   在这里对两位表示深深的感谢。
   ## 与其它库的不同
   Skin的核心思路来源于前面提到的两位作者的思想，但并不是ctrl+C&V的结果，我仅仅是基于两者的思想进行实现，有些地方是参照了原作者的写法，但更多的是我自身对这个思想的理解。
@@ -13,9 +13,9 @@
   标记属性：在布局文件中进行命名空间申明，并为需要进行皮肤切换的控件设置属性标记。
   这两种方式都支持属性后缀切换，也就是在同一套皮肤中（可以是插件皮肤），可以提供不同后缀结尾的属性来达到快速的皮肤切换。
   ## 未来计划
-  实现动态添加的View的皮肤切换
-  增加文字字体的切换
-  提供更多默认属性的实现
+  * 实现动态添加的View的皮肤切换
+  * 增加文字字体的切换
+  * 提供更多默认属性的实现
 
 更多介绍请查看[Wiki](https://github.com/SupLuo/Easy/wiki/Skin:详细介绍)了解。
 
