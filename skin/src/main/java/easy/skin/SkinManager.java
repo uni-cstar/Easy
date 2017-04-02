@@ -11,6 +11,8 @@ import android.support.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import easy.skin.attr.SkinAttrSupport;
 import easy.skin.factory.SkinAttrFactory;
 import easy.skin.impl.SkinChangedListener;
 import easy.skin.impl.SkinCompatImpl;
@@ -133,6 +135,13 @@ public class SkinManager {
         mSkinAttrFactory = attrFactory;
     }
 
+    /**
+     * 设置资源未找到时是否忽略设置控件对应值
+     * @param ignore
+     */
+    public void setIgnoreWhenAttrNotFound(boolean ignore){
+        SkinAttrSupport.setIgnoreWhenAttrNotFound(ignore);
+    }
     /**
      * 初始化
      * 建议在{@link Application#onCreate()}处进行调用
