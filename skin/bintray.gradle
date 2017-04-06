@@ -2,13 +2,15 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 def proj_version = '1.0.0'
-def proj_artifact_id = 'skin'
+def proj_artifact_id ='skin'
 def proj_group='ms.easy'
 def proj_pom_name = 'Skin for Android'
 
 def siteUrl = 'https://github.com/SupLuo/Easy/tree/master/skin'      // 项目的主页
 def gitUrl = 'https://github.com/SupLuo/Easy.git'   // Git仓库的url
 
+group = proj_group
+version = proj_version
 
 install {
     repositories.mavenInstaller {
@@ -20,7 +22,7 @@ install {
                 version proj_version
                 packaging 'aar'
                 // Add your description here
-                name proj_pom_name    //项目描述
+                name proj_artifact_id    //项目描述
                 url siteUrl
                 // Set your license
                 licenses {

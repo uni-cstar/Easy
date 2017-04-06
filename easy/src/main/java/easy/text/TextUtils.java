@@ -54,7 +54,7 @@ public class TextUtils {
     /**
      * 设置文字阴影
      *
-     * @see {@link TextView#setShadowLayer(float, float, float, int)}
+     * {@link TextView#setShadowLayer(float, float, float, int)}
      */
     public static void setTextShadow(TextView tv, float radius, float dx, float dy, int color) {
         tv.setShadowLayer(radius, dx, dy, color);

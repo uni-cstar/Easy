@@ -1,7 +1,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def proj_version = '0.2'
+def proj_version = '0.2.1'
 def proj_artifact_id = 'easy'
 def proj_group='ms.easy'
 def proj_pom_name = 'Easy for Android'
@@ -9,6 +9,8 @@ def proj_pom_name = 'Easy for Android'
 def siteUrl = 'https://github.com/SupLuo/Easy/tree/master/easy'      // 项目的主页
 def gitUrl = 'https://github.com/SupLuo/Easy.git'   // Git仓库的url
 
+group = proj_group
+version = proj_version
 
 install {
     repositories.mavenInstaller {
@@ -58,8 +60,8 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
 }
 artifacts {
-    archives javadocJar
-    archives sourcesJar
+//    archives javadocJar
+//    archives sourcesJar
 }
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())

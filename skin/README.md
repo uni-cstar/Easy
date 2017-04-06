@@ -17,6 +17,22 @@
   * 增加文字字体的切换
   * 提供更多默认属性的实现
 
+
+  ## Gradle配置
+   ```
+   allprojects {
+       repositories {
+           jcenter()
+           //在工程的build.gradle文件中添加下述语句
+           maven { url 'https://dl.bintray.com/supluo/maven' }
+       }
+   }
+   ```
+
+   ```
+   //在Module的build.gradle文件中添加下述语句
+    compile 'ms.easy:skin:1.0.0'
+   ```
 更多介绍请查看[Wiki](https://github.com/SupLuo/Easy/wiki/Skin:详细介绍)了解。
 
   ## Release v1.0

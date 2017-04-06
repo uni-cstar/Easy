@@ -20,13 +20,13 @@ public class Downloader {
      * <p>
      * 需求权限：
      * //Normal Permissions
-     * <uses-permission android:name="android.permission.INTERNET"/>
+     * uses-permission android:name="android.permission.INTERNET"
      * //Dangerous Permissions:
-     * <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-     * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-     * </p>
+     * uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+     * uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
      *
      * @param params
+     * @param listener
      * @return 下载任务
      */
     public static DownloadTask startRequest(Context context, DownloadTask.DownloadRequestParams params, DownloadTask.OnDownloadListener listener) {
@@ -125,7 +125,9 @@ public class Downloader {
      * 移除下载任务
      *
      * @param context
+     * @param url
      * @param id
+     *
      */
     public static void removeDownloadTask(Context context, String url, long id) {
         DownloadManager dm = (DownloadManager) context.getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);

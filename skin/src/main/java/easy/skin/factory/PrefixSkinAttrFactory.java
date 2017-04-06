@@ -1,15 +1,5 @@
 package easy.skin.factory;
 
-import android.content.Context;
-import android.util.AttributeSet;
-
-import com.zhy.changeskin.utils.L;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import easy.skin.attr.SkinAttr;
-import easy.skin.attr.SkinAttrSupport;
 import easy.skin.util.SkinUtil;
 
 /**

@@ -3,7 +3,6 @@ package easy.skin.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.zhy.changeskin.constant.SkinConfig;
 
 /**
  * Created by Lucio on 17/3/30.
@@ -17,6 +16,7 @@ public class SkinPrefUtil {
     private static final String PREF_FILE_NAME = "skin_plugin_pref";
     private static final String KEY_PLUGIN_PATH = "key_plugin_path";
     private static final String KEY_PLUGIN_PKG = "key_plugin_pkg";
+    private static final String KEY_PLUGIN_SUFFIX = "key_plugin_suffix";
 
     public SkinPrefUtil(Context context) {
         this.mContext = context;
@@ -43,18 +43,18 @@ public class SkinPrefUtil {
     }
 
     public String getSuffix() {
-        SharedPreferences sp = mContext.getSharedPreferences(SkinConfig.PREF_NAME, Context.MODE_PRIVATE);
-        return sp.getString(SkinConfig.KEY_PLUGIN_SUFFIX, "");
+        SharedPreferences sp = mContext.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        return sp.getString(KEY_PLUGIN_SUFFIX, "");
     }
 
 
     public void putPluginSuffix(String suffix) {
-        SharedPreferences sp = mContext.getSharedPreferences(SkinConfig.PREF_NAME, Context.MODE_PRIVATE);
-        sp.edit().putString(SkinConfig.KEY_PLUGIN_SUFFIX, suffix).apply();
+        SharedPreferences sp = mContext.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        sp.edit().putString(KEY_PLUGIN_SUFFIX, suffix).apply();
     }
 
     public boolean clear() {
-        SharedPreferences sp = mContext.getSharedPreferences(SkinConfig.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sp = mContext.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         return sp.edit().clear().commit();
     }
 

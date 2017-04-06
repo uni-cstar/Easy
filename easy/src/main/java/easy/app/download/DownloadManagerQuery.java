@@ -101,6 +101,7 @@ public class DownloadManagerQuery {
     /**
      * 获取下载状态
      *
+     * @param dm
      * @param downloadId
      * @return
      */
@@ -160,6 +161,7 @@ public class DownloadManagerQuery {
     /**
      * 获取下载文件名字
      *
+     * @param dm
      * @param downloadId
      * @return
      */
@@ -170,6 +172,7 @@ public class DownloadManagerQuery {
     /**
      * 获取Uri
      *
+     * @param dm
      * @param downloadId
      * @return
      */
@@ -183,8 +186,8 @@ public class DownloadManagerQuery {
      * @param downloadId
      * @return <ul>
      * <li>if status of downloadId is {@link DownloadManager#STATUS_PAUSED}, return
-     * {@link #getPausedReason(long)}</li>
-     * <li>if status of downloadId is {@link DownloadManager#STATUS_FAILED}, return {@link #getErrorCode(long)}</li>
+     * {@link #getPausedReason(DownloadManager, long)}}</li>
+     * <li>if status of downloadId is {@link DownloadManager#STATUS_FAILED}, return {@link #getErrorCode(DownloadManager, long)}</li>
      * <li>if status of downloadId is neither {@link DownloadManager#STATUS_PAUSED} nor
      * {@link DownloadManager#STATUS_FAILED}, return 0</li>
      * </ul>
@@ -196,6 +199,7 @@ public class DownloadManagerQuery {
     /**
      * get paused reason
      *
+     * @param dm
      * @param downloadId
      * @return <ul>
      * <li>if status of downloadId is {@link DownloadManager#STATUS_PAUSED}, return one of
@@ -214,7 +218,7 @@ public class DownloadManagerQuery {
      * get failed error code
      *
      * @param downloadId
-     * @return one of {@link DownloadManager#ERROR_*}
+     * @return one of DownloadManager#ERROR_xx
      */
     public int getErrorCode(DownloadManager dm, long downloadId) {
         return getInt(dm, downloadId, DownloadManager.COLUMN_REASON);
