@@ -19,6 +19,11 @@ import easy.skin.attr.SkinAttrSupport;
 
 public abstract class SkinAttrFactory {
 
+    //命名空间 在布局文件中申明
+    public static final String NAMESPACE = "http://schemas.android.com/android/skin";
+    //属性 eg: skin:enable="true"
+    public static final String ATTR_SKIN_ENABLE = "enable";
+
     /**
      * 前缀属性过滤工厂
      * @param prefix 前缀 ，为空时使用{@link PrefixSkinAttrFactory#DEFAULT_PREFIX}做为默认
@@ -53,46 +58,21 @@ public abstract class SkinAttrFactory {
                 TypedArray a = context.getTheme().obtainStyledAttributes(styleID, styleAttrs);
 
                 //处理样式中的textColor
-//                int textColor = a.getColor(0, -1);
                 int textColorId = a.getResourceId(0, -1);
                 if (textColorId != -1) {//&&textColor != -1
-                    String entryName = context.getResources().getResourceEntryName(textColorId);
-                    String typeName = context.getResources().getResourceTypeName(textColorId);
-                    if (addRefAttr("textColor", textColorId, entryName, typeName)) {
-                        SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, entryName, typeName);
-                        if (skinAttr != null) {
-                            skinAttrs.add(skinAttr);
-                        }
-                    }
+                    handleAttrByResId(context,"textColor",textColorId,skinAttrs);
                 }
 
                 //处理background
-//                int background = a.getColor(1, -1);
                 int backgroundId = a.getResourceId(1, -1);
                 if (backgroundId != -1) {//&&background != -1
-                    String entryName = context.getResources().getResourceEntryName(backgroundId);
-                    String typeName = context.getResources().getResourceTypeName(backgroundId);
-
-                    if (addRefAttr("background", backgroundId, entryName, typeName)) {
-                        SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, entryName, typeName);
-                        if (skinAttr != null) {
-                            skinAttrs.add(skinAttr);
-                        }
-                    }
+                    handleAttrByResId(context,"background",backgroundId,skinAttrs);
                 }
 
                 //处理src id
                 int srcId = a.getResourceId(2, -1);
                 if (srcId != -1) {
-                    String entryName = context.getResources().getResourceEntryName(srcId);
-                    String typeName = context.getResources().getResourceTypeName(srcId);
-
-                    if (addRefAttr("src", backgroundId, entryName, typeName)) {
-                        SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, entryName, typeName);
-                        if (skinAttr != null) {
-                            skinAttrs.add(skinAttr);
-                        }
-                    }
+                    handleAttrByResId(context,"src",srcId,skinAttrs);
                 }
                 a.recycle();
                 continue;
@@ -100,15 +80,21 @@ public abstract class SkinAttrFactory {
             //如果是支持的属性，并且属性值是引用。 eg: android:background="@drawable/launcher"
             if (SkinAttrSupport.isSupportedAttr(attrName) && attrValue.startsWith("@")) {
                 int id = Integer.parseInt(attrValue.substring(1));
-                String entryName = context.getResources().getResourceEntryName(id);//入口名，eg:launcher
-                String typeName = context.getResources().getResourceTypeName(id);//类型名，eg:drawable
-                //是否添加引用属性
-                if (addRefAttr(attrName, id, entryName, typeName)) {
-                    skinAttrs.add(SkinAttrSupport.genSkinAttr(attrName, entryName, typeName));
-                }
+                handleAttrByResId(context,attrName,id,skinAttrs);
             }
         }
         return skinAttrs;
+    }
+
+    private void handleAttrByResId(Context context, String attrName, int resId, List<SkinAttr> skinAttrs){
+        String entryName = context.getResources().getResourceEntryName(resId);//入口名，eg:launcher
+        String typeName = context.getResources().getResourceTypeName(resId);//类型名，eg:drawable
+        //是否添加引用属性
+        if (addRefAttr(attrName, resId, entryName, typeName)) {
+            SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, entryName, typeName);
+            if(skinAttr != null)
+                skinAttrs.add(skinAttr);
+        }
     }
 
     /**

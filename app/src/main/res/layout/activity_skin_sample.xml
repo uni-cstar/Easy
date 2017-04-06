@@ -21,8 +21,7 @@
             android:id="@+id/btn1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/skin_sample_button_1_bg_color"
-            android:textColor="@color/skin_sample_button_1_text_color"
+            style="@style/StyleText"
             android:text="切换样式"
             skin:enable="true"/>
         <Button

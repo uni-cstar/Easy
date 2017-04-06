@@ -8,9 +8,10 @@ import java.util.HashMap;
  */
 public class SkinAttrSupport {
 
-    public static final String DEF_SUPPORT_ATTR_BACKGROUND="background";
-    public static final String DEF_SUPPORT_ATTR_TEXTCOLOR="textColor";
-    public static final String DEF_SUPPORT_ATTR_SRC="src";
+    public static final String DEF_SUPPORT_ATTR_BACKGROUND = "background";
+    public static final String DEF_SUPPORT_ATTR_TEXTCOLOR = "textColor";
+    public static final String DEF_SUPPORT_ATTR_SRC = "src";
+
     /**
      * 支持的属性
      */
@@ -24,7 +25,7 @@ public class SkinAttrSupport {
         mSupportAttrs.put(DEF_SUPPORT_ATTR_SRC, new SrcAttr());
     }
 
-    public static boolean isIgnoreWhenAttrNotFound(){
+    public static boolean isIgnoreWhenAttrNotFound() {
         return ignoreWhenAttrNotFound;
     }
 
@@ -34,9 +35,10 @@ public class SkinAttrSupport {
      * 但是切换的时候找不到对应的资源，哪么这个时候得到的资源ID为0，
      * 如果还是将结果设置给TextView的话，会导致取消TextView的一些默认效果，
      * 设置为True将会忽略资源不存在的结果。
+     *
      * @param ignore
      */
-    public static void setIgnoreWhenAttrNotFound(boolean ignore){
+    public static void setIgnoreWhenAttrNotFound(boolean ignore) {
         ignoreWhenAttrNotFound = ignore;
     }
 
@@ -81,9 +83,12 @@ public class SkinAttrSupport {
 
     /**
      * 移除支持的属性
+     *
      * @param attrName 属性名字
      */
-    public static void removeSupport(String attrName){
+    public static void removeSupport(String attrName) {
         mSupportAttrs.remove(attrName);
     }
+
+
 }

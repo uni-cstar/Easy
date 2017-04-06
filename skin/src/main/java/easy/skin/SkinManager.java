@@ -150,9 +150,9 @@ public class SkinManager {
      */
     public void init(Context context) {
         mContext = context.getApplicationContext();
-        mSkinAttrFactory = SkinAttrFactory.createPrefixFactory(null);
+//        mSkinAttrFactory = SkinAttrFactory.createPrefixFactory(null);
         //默认使用命名空间解析方式
-//        mSkinAttrFactory = NamespaceSkinAttrFactory.create();
+        mSkinAttrFactory = SkinAttrFactory.createNamespaceFactory();
         //默认资源管理器
         mResourceManager = new ResourceManager(mContext, mContext.getResources(), mContext.getPackageName(), "");
         mPrefUtils = new SkinPrefUtil(mContext);

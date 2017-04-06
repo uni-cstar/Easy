@@ -13,11 +13,6 @@ import easy.skin.attr.SkinAttr;
  */
 class NamespaceSkinAttrFactory extends SkinAttrFactory {
 
-    //命名空间 在布局文件中申明
-    public static final String NAMESPACE = "http://schemas.android.com/android/skin";
-    //属性 eg: skin:enable="true"
-    public static final String ATTR_SKIN_ENABLE = "enable";
-
     NamespaceSkinAttrFactory(){}
 
     @Override
