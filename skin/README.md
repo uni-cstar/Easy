@@ -39,6 +39,7 @@
      * 修正style属性解析bug
      * 前缀属性模式申明：
       前缀属性解析方式是根据资源名字的前缀来区分的，注意资源连续引用的情况：
+
       //假如有以下定义
       ```
       <color name="skin_sample_button_1_text_color">@android:color/white</color>
@@ -47,6 +48,7 @@
            <item name="android:background">@color/skin_sample_button_1_bg_color</item>
       </style>
       ```
+      
       当一个控件引用上述style，并且是前缀属性解析方式，哪么最终结果是会忽略此控件的textColor换肤属性，因为textColor的资源是一个连续引用，在解析style之后，得到的资源结果最终是
       `android:textColor="@android:color/white"`,资源值为white，不符合资源前缀属性解析规则，所以在这种情况下这个属性会被忽略。
       解决办法就是避免连续引用，或者保证最后的资源引用符合前缀属性解析规则即可。
