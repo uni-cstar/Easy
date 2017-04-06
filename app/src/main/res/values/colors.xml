@@ -7,7 +7,7 @@
     <color name="skin_sample_button_1_bg_color">#323151</color>
     <color name="skin_sample_button_1_bg_color_red">#FF0000</color>
     <color name="skin_sample_button_1_bg_color_blue">#0000ff</color>
-    <color name="skin_sample_button_1_text_color">@android:color/white</color>
+    <color name="skin_sample_button_1_text_color">#FFFFFF</color>
     <color name="skin_sample_button_1_text_color_red">#0000ff</color>
     <color name="skin_sample_button_1_text_color_blue">#FF0000</color>
 

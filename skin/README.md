@@ -36,6 +36,7 @@
 更多介绍请查看[Wiki](https://github.com/SupLuo/Easy/wiki/Skin:详细介绍)了解。
 
   ## Release v1.0.1
+
      * 修正style属性解析bug
      * 前缀属性模式申明：
       前缀属性解析方式是根据资源名字的前缀来区分的，注意资源连续引用的情况：
@@ -48,12 +49,13 @@
            <item name="android:background">@color/skin_sample_button_1_bg_color</item>
       </style>
       ```
-      
+
       当一个控件引用上述style，并且是前缀属性解析方式，哪么最终结果是会忽略此控件的textColor换肤属性，因为textColor的资源是一个连续引用，在解析style之后，得到的资源结果最终是
       `android:textColor="@android:color/white"`,资源值为white，不符合资源前缀属性解析规则，所以在这种情况下这个属性会被忽略。
       解决办法就是避免连续引用，或者保证最后的资源引用符合前缀属性解析规则即可。
       例如：`<color name="skin_sample_button_1_text_color">#FFFFFF</color>`.
       如果是多次连续引用，比如A指向B，B指向C，C指向D，哪么只需要保证D是以换肤前缀开头即可。
+      
   ## Release v1.0.0
      * 支持外置皮肤插件文件
      * 支持两种换肤方式：前缀属性和标记属性。
