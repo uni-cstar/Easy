@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_skin_sample"
     android:layout_width="match_parent"
-    xmlns:skin="http://schemas.android.com/android/skin"
     android:layout_height="match_parent"
     tools:context="ms.lucio.skin.SkinSampleActivity">
 
@@ -12,38 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <EditText
             android:id="@+id/edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="支持输入red／blue"/>
+            android:hint="支持输入red／blue" />
+
         <Button
             android:id="@+id/btn1"
+            style="@style/StyleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/StyleText"
             android:text="切换样式"
-            skin:enable="true"/>
+            skin:enable="true" />
+
         <Button
             android:id="@+id/btn2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="清除样式"/>
+            android:background="@color/skin_sample_button_1_bg_color"
+            android:text="清除样式"
+            android:textColor="@color/skin_sample_button_1_text_color"
+            skin:enable="true" />
+
         <Button
             android:id="@+id/btn3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="加载sdk 下ucux-ls.skin文件"/>
+            android:text="加载sdk 下ucux-ls.skin文件" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="@drawable/skin_femal"/>
+            android:src="@drawable/skin_femal" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@mipmap/skin_img"/>
-        </LinearLayout>
+            android:background="@mipmap/skin_img" />
+    </LinearLayout>
 
 </FrameLayout>

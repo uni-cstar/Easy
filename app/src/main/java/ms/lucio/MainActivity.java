@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import easy.skin.SkinManager;
+import easy.skin.factory.SkinAttrFactory;
 import easy.widget.QuickAdapter;
 import ms.lucio.skin.SkinSampleActivity;
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SkinManager.getInstance().init(this);
+        SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
         startActivity(SkinSampleActivity.class);
     }
 
