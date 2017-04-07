@@ -36,7 +36,7 @@
 更多介绍请查看[Wiki](https://github.com/SupLuo/Easy/wiki/Skin:详细介绍)了解。
 
 来个图直观感受一下。<br/>
-![img](http://upload-images.jianshu.io/upload_images/2149929-c16c935196dfb3a3.gif?imageMogr2/auto-orient/strip)
+![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
   ## Release v1.0.1
 
