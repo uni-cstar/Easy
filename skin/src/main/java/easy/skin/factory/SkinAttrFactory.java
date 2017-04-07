@@ -58,9 +58,6 @@ public abstract class SkinAttrFactory {
                 TypedArray a = context.getTheme().obtainStyledAttributes(styleID, styleAttrs);
 
                 //处理样式中的textColor
-                String textColorRes = a.getNonResourceString(0);
-                String textColorRes1 = a.getString(0);
-                String textColorRes2 = a.getPositionDescription();
                 int textColorId = a.getResourceId(0, -1);
                 if (textColorId != -1) {//&&textColor != -1
                     handleAttrByResId(context,"textColor",textColorId,skinAttrs);
