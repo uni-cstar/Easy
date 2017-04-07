@@ -3,4 +3,4 @@
 
 来个图直观感受一下。
 
-![img](http://upload-images.jianshu.io/upload_images/2149929-c16c935196dfb3a3.gif?imageMogr2/auto-orient/strip)
+![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
