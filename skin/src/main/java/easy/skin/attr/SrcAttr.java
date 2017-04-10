@@ -11,6 +11,7 @@ import easy.skin.SkinManager;
  * src属性处理器
  */
 class SrcAttr extends SkinAttr {
+
     @Override
     public boolean apply(View view) {
         if (view instanceof ImageView) {
@@ -23,4 +24,5 @@ class SrcAttr extends SkinAttr {
         }
         return false;
     }
+
 }

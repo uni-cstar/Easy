@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 
-import easy.skin.attr.SkinAttr;
 import easy.skin.util.SkinUtil;
 
 /**
@@ -60,7 +59,7 @@ public class ResourceManager {
 
     private int getColor2(String resName) {
         try {
-            int resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_COLOR, mPluginPackageName);
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
             if(resId == 0)
                 return 0;
 
@@ -98,7 +97,7 @@ public class ResourceManager {
 
     private ColorStateList getColorStateList2(String resName) {
         try {
-            int resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_COLOR, mPluginPackageName);
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
             if(resId == 0)
                 return null;
             ColorStateList result = null;
@@ -134,12 +133,12 @@ public class ResourceManager {
 
     private Drawable getDrawable2(String resName) {
         try {
-            int resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_DRAWABLE, mPluginPackageName);
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DRAWABLE, mPluginPackageName);
             if (resId == 0) {
-                resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_MIPMAP, mPluginPackageName);
+                resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_MIPMAP, mPluginPackageName);
             }
             if (resId == 0) {
-                resId = mResources.getIdentifier(resName, SkinAttr.RES_TYPE_NAME_COLOR, mPluginPackageName);
+                resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
             }
 
             if(resId == 0)

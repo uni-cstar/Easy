@@ -2,15 +2,13 @@ package easy.skin.attr;
 
 import java.util.HashMap;
 
+import easy.skin.SkinConst;
+
 /**
  * Created by Lucio on 17/3/31.
  * 支持的属性
  */
 public class SkinAttrSupport {
-
-    public static final String DEF_SUPPORT_ATTR_BACKGROUND = "background";
-    public static final String DEF_SUPPORT_ATTR_TEXTCOLOR = "textColor";
-    public static final String DEF_SUPPORT_ATTR_SRC = "src";
 
     /**
      * 支持的属性
@@ -20,9 +18,9 @@ public class SkinAttrSupport {
     private static boolean ignoreWhenAttrNotFound = true;
 
     static {
-        mSupportAttrs.put(DEF_SUPPORT_ATTR_BACKGROUND, new BackgroundAttr());
-        mSupportAttrs.put(DEF_SUPPORT_ATTR_TEXTCOLOR, new TextColorAttr());
-        mSupportAttrs.put(DEF_SUPPORT_ATTR_SRC, new SrcAttr());
+        mSupportAttrs.put(SkinConst.ATTR_NAME_BACKGROUND, new BackgroundAttr());
+        mSupportAttrs.put(SkinConst.ATTR_NAME_TEXTCOLOR, new TextColorAttr());
+        mSupportAttrs.put(SkinConst.ATTR_NAME_SRC, new SrcAttr());
     }
 
     public static boolean isIgnoreWhenAttrNotFound() {

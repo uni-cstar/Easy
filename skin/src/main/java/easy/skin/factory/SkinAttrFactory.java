@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import easy.skin.SkinConst;
 import easy.skin.attr.SkinAttr;
 import easy.skin.attr.SkinAttrSupport;
 
@@ -19,14 +20,9 @@ import easy.skin.attr.SkinAttrSupport;
 
 public abstract class SkinAttrFactory {
 
-    //命名空间 在布局文件中申明
-    public static final String NAMESPACE = "http://schemas.android.com/android/skin";
-    //属性 eg: skin:enable="true"
-    public static final String ATTR_SKIN_ENABLE = "enable";
-
     /**
      * 前缀属性过滤工厂
-     * @param prefix 前缀 ，为空时使用{@link PrefixSkinAttrFactory#DEFAULT_PREFIX}做为默认
+     * @param prefix 前缀 ，为空时使用{@link SkinConst#DEFAULT_PREFIX}做为默认
      * @return
      */
     public static SkinAttrFactory createPrefixFactory(@Nullable String prefix){

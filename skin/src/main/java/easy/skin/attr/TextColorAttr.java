@@ -11,6 +11,7 @@ import easy.skin.SkinManager;
  * textColor属性处理器
  */
 class TextColorAttr extends SkinAttr {
+
     @Override
     public boolean apply(View view) {
         if (view instanceof TextView) {
@@ -25,4 +26,5 @@ class TextColorAttr extends SkinAttr {
         }
         return false;
     }
+
 }
