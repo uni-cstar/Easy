@@ -17,7 +17,7 @@ class TextColorAttr extends SkinAttr {
         if (view instanceof TextView) {
             TextView tv = (TextView) view;
             if (isColor()) {
-                ColorStateList color = SkinManager.getInstance().getResourceManager().getColorStateList(attrValueRefName);
+                ColorStateList color = SkinManager.getInstance().getResourceManager().getColorStateList(resEntryName);
                 if (color == null && SkinAttrSupport.isIgnoreWhenAttrNotFound())
                     return false;
                 tv.setTextColor(color);

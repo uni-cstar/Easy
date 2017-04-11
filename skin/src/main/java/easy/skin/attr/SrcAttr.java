@@ -16,7 +16,7 @@ class SrcAttr extends SkinAttr {
     public boolean apply(View view) {
         if (view instanceof ImageView) {
             ImageView iv = (ImageView) view;
-            Drawable drawable = SkinManager.getInstance().getResourceManager().getDrawable(attrValueRefName);
+            Drawable drawable = SkinManager.getInstance().getResourceManager().getDrawable(resEntryName);
             if(drawable == null && SkinAttrSupport.isIgnoreWhenAttrNotFound())
                 return false;
             iv.setImageDrawable(drawable);

@@ -16,7 +16,7 @@ class BackgroundAttr extends SkinAttr{
     @Override
     public boolean apply(View view) {
         if (isColor()) {
-            int color = SkinManager.getInstance().getResourceManager().getColor(attrValueRefName);
+            int color = SkinManager.getInstance().getResourceManager().getColor(resEntryName);
             if(color == 0 && SkinAttrSupport.isIgnoreWhenAttrNotFound())
                 return false;
             if (view instanceof CardView) {//CardView特殊处理下
@@ -28,7 +28,7 @@ class BackgroundAttr extends SkinAttr{
             }
             return true;
         } else if (isDrawable()) {
-            Drawable bg = SkinManager.getInstance().getResourceManager().getDrawable(attrValueRefName);
+            Drawable bg = SkinManager.getInstance().getResourceManager().getDrawable(resEntryName);
             if(bg == null && SkinAttrSupport.isIgnoreWhenAttrNotFound())
                 return false;
             if (Build.VERSION.SDK_INT >= 16) {

@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import easy.skin.BaseSkinActivity;
+import easy.skin.base.BaseSkinActivity;
 import easy.skin.SkinManager;
 import easy.skin.impl.SkinLoadListener;
 import ms.lucio.R;

@@ -43,17 +43,17 @@ public class SkinAttrSupport {
     /**
      * 生成属性
      *
-     * @param attrName         属性名字 eg:background
-     * @param attrValueRefName 资源名字 eg:login_bg
-     * @param typeName         资源类型 eg:drawable color
+     * @param attrName     属性名字 eg:background
+     * @param resEntryName 资源名字 eg:login_bg
+     * @param resTypeName  资源类型 eg:drawable color
      * @return
      */
-    public static SkinAttr genSkinAttr(String attrName, String attrValueRefName, String typeName) {
+    public static SkinAttr genSkinAttr(String attrName, String resEntryName, String resTypeName) {
         SkinAttr mSkinAttr = mSupportAttrs.get(attrName).clone();
         if (mSkinAttr == null) return null;
         mSkinAttr.attrName = attrName;
-        mSkinAttr.attrValueRefName = attrValueRefName;
-        mSkinAttr.attrValueTypeName = typeName;
+        mSkinAttr.resEntryName = resEntryName;
+        mSkinAttr.resTypeName = resTypeName;
         return mSkinAttr;
     }
 

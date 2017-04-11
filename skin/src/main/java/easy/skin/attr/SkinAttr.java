@@ -17,20 +17,20 @@ public abstract class SkinAttr implements Cloneable {
     /**
      * 资源名字, eg:login_bg
      */
-    public String attrValueRefName;
+    public String resEntryName;
 
     /**
      * 属性值类型。eg: color or drawable
      */
-    public String attrValueTypeName;
+    public String resTypeName;
 
     protected boolean isDrawable() {
-        return SkinConst.RES_TYPE_NAME_DRAWABLE.equals(attrValueTypeName)
-                || SkinConst.RES_TYPE_NAME_MIPMAP.equals(attrValueTypeName);
+        return SkinConst.RES_TYPE_NAME_DRAWABLE.equals(resTypeName)
+                || SkinConst.RES_TYPE_NAME_MIPMAP.equals(resTypeName);
     }
 
     protected boolean isColor() {
-        return SkinConst.RES_TYPE_NAME_COLOR.equals(attrValueTypeName);
+        return SkinConst.RES_TYPE_NAME_COLOR.equals(resTypeName);
     }
 
     /**
