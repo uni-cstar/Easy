@@ -11,4 +11,8 @@
     <color name="skin_sample_button_1_text_color_red">#0000ff</color>
     <color name="skin_sample_button_1_text_color_blue">#FF0000</color>
 
+    <string name="skin_clear">清除皮肤</string>
+    <string name="skin_clear_red">清除皮肤_red</string>
+    <string name="skin_clear_blue">清除皮肤_blue</string>
+
 </resources>

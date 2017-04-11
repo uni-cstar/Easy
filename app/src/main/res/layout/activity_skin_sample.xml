@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/skin_sample_button_1_bg_color"
-            android:text="清除样式"
+            android:text="@string/skin_clear"
             android:textColor="@color/skin_sample_button_1_text_color"
             skin:enable="true" />
 

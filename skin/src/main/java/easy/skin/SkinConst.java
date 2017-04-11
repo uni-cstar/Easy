@@ -13,13 +13,14 @@ public class SkinConst {
     public static final String RES_TYPE_NAME_COLOR = "color";
     public static final String RES_TYPE_NAME_DRAWABLE = "drawable";
     public static final String RES_TYPE_NAME_MIPMAP = "mipmap";
-
+    public static final String RES_TYPE_NAME_STRING = "string";
     /**
      * 默认支持的属性
      */
     public static final String ATTR_NAME_BACKGROUND = "background";
     public static final String ATTR_NAME_TEXTCOLOR = "textColor";
     public static final String ATTR_NAME_SRC = "src";
+    public static final String ATTR_NAME_TEXT = "text";
 
     /**
      * 命名空间 在布局文件中申明

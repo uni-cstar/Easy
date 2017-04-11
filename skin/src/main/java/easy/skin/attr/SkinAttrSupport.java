@@ -88,5 +88,11 @@ public class SkinAttrSupport {
         mSupportAttrs.remove(attrName);
     }
 
-
+    /**
+     * 添加额外的属性支持
+     * android:text
+     */
+    public static void addExtraSupportAttr() {
+        mSupportAttrs.put(SkinConst.ATTR_NAME_TEXT, new TextAttr());
+    }
 }

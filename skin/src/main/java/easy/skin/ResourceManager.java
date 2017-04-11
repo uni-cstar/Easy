@@ -95,6 +95,7 @@ public class ResourceManager {
         return result;
     }
 
+
     private ColorStateList getColorStateList2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
@@ -155,6 +156,33 @@ public class ResourceManager {
                 result = ContextCompat.getDrawable(mContext,resId);
             }
             return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public CharSequence getText(String resName){
+        String suffixName = appendSuffix(resName);
+        CharSequence text = getText2(suffixName);
+        if (text == null) {
+            return getText2(resName);
+        }
+        return text;
+    }
+
+    private CharSequence getText2(String resName){
+        try {
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_STRING, mPluginPackageName);
+            if(resId == 0)
+                return null;
+
+            try {
+                return mResources.getText(resId);
+            }catch (Exception e){
+                e.printStackTrace();
+                return mContext.getResources().getText(resId);
+            }
         }catch (Exception e){
             e.printStackTrace();
             return null;

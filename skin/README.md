@@ -38,6 +38,18 @@
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
+  ## Release v1.0.2 (未发布gradle)
+     * 新增动态View换肤支持
+       `ISkinDelegate.addSkinView(View view, List<SkinAttr> skinAttrs)`
+       只需在使用中调用`SkinDelegate` 或者 `BaseSkinActivity` 与 `BaseSkinFragment`中等同的方法添加即可。
+
+     * Fragment换肤完善
+       具体依靠`BaseSkinFragment`处理
+
+     * 新增额外属性支持android:text
+       默认没有添加到支持的集合中，因为可能不是常用的属性，如需使用，在初始化`SkinManager`之后调用`SkinAttrSupport.addExtraSupportAttr()`方法添加
+       也可根据自己需要添加到`SkinAttrSupport`中。
+
   ## Release v1.0.1
 
      * 修正style属性解析bug
