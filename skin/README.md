@@ -38,7 +38,7 @@
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
-  ## Release v1.0.2 (未发布gradle)
+  ## Release v1.0.3
      * 新增动态View换肤支持
        `ISkinDelegate.addSkinView(View view, List<SkinAttr> skinAttrs)`
        只需在使用中调用`SkinDelegate` 或者 `BaseSkinActivity` 与 `BaseSkinFragment`中等同的方法添加即可。
