@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,6 +250,13 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     @Override
     public void addSkinView(View view, List<SkinAttr> skinAttrs) {
         injectSkinView(view, skinAttrs);
+    }
+
+    @Override
+    public void addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
+        SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, resEntryName, resTypeName);
+        List<SkinAttr> skinAttrs = Collections.singletonList(skinAttr);
+        addSkinView(view, skinAttrs);
     }
 
 }

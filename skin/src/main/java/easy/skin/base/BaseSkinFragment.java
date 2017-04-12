@@ -42,9 +42,10 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
     /**
      * 当前Fragment是否缓存了View
      * 可以重写此方法改变onDestroyView移除view
+     *
      * @return
      */
-    public boolean isCacheView(){
+    public boolean isCacheView() {
         return false;
     }
 
@@ -52,7 +53,7 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
     public void onDestroyView() {
         super.onDestroyView();
 
-        if(isCacheView())
+        if (isCacheView())
             return;
         View view = getView();
         if (view == null)
@@ -78,6 +79,12 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
     public void addSkinView(View view, List<SkinAttr> skinAttrs) {
         if (mSkinDelegateImpl != null)
             mSkinDelegateImpl.addSkinView(view, skinAttrs);
+    }
+
+    @Override
+    public void addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
+        if (mSkinDelegateImpl != null)
+            mSkinDelegateImpl.addSkinView(view, attrName, resEntryName, resTypeName);
     }
 
 }
