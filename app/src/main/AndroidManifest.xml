@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".DownloadSampleActivity" />
-        <activity android:name=".skin.SkinSampleActivity"></activity>
+        <activity android:name=".skin.SkinSampleActivity" />
+        <activity android:name=".UiTestActivity"></activity>
     </application>
 
 </manifest>

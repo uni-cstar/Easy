@@ -6,6 +6,7 @@ import android.view.View;
 
 import java.util.List;
 
+import easy.skin.SkinView;
 import easy.skin.attr.SkinAttr;
 import easy.skin.impl.ISkinDelegate;
 
@@ -76,15 +77,17 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
     }
 
     @Override
-    public void addSkinView(View view, List<SkinAttr> skinAttrs) {
+    public SkinView addSkinView(View view, List<SkinAttr> skinAttrs) {
         if (mSkinDelegateImpl != null)
-            mSkinDelegateImpl.addSkinView(view, skinAttrs);
+            return mSkinDelegateImpl.addSkinView(view, skinAttrs);
+        return null;
     }
 
     @Override
-    public void addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
+    public SkinView addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
         if (mSkinDelegateImpl != null)
-            mSkinDelegateImpl.addSkinView(view, attrName, resEntryName, resTypeName);
+            return mSkinDelegateImpl.addSkinView(view, attrName, resEntryName, resTypeName);
+        return null;
     }
 
 }

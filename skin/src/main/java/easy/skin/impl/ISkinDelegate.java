@@ -4,6 +4,7 @@ import android.view.View;
 
 import java.util.List;
 
+import easy.skin.SkinView;
 import easy.skin.attr.SkinAttr;
 
 /**
@@ -21,7 +22,7 @@ public interface ISkinDelegate {
      * @param view
      * @param skinAttrs 换肤属性
      */
-    void addSkinView(View view, List<SkinAttr> skinAttrs);
+    SkinView addSkinView(View view, List<SkinAttr> skinAttrs);
 
     /**
      * 添加换肤View
@@ -30,5 +31,5 @@ public interface ISkinDelegate {
      * @param resEntryName 资源名字 eg:login_bg
      * @param resTypeName  资源类型 eg:drawable color
      */
-    void addSkinView(View view, String attrName, String resEntryName, String resTypeName);
+    SkinView addSkinView(View view, String attrName, String resEntryName, String resTypeName);
 }

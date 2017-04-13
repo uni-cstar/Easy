@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import easy.R;
 
+
 /**
  * Created by Lucio on 17/3/20.
  * 透明状态栏实现类

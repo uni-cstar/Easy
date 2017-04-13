@@ -7,6 +7,7 @@ import android.view.View;
 import java.util.List;
 
 import easy.skin.SkinDelegate;
+import easy.skin.SkinView;
 import easy.skin.attr.SkinAttr;
 import easy.skin.impl.ISkinActivityDelegate;
 import easy.skin.impl.ISkinDelegate;
@@ -45,7 +46,12 @@ public class BaseSkinActivity extends AppCompatActivity implements ISkinDelegate
     }
 
     @Override
-    public void addSkinView(View view, List<SkinAttr> skinAttrs) {
-        mSkinDelegateImpl.addSkinView(view, skinAttrs);
+    public SkinView addSkinView(View view, List<SkinAttr> skinAttrs) {
+        return mSkinDelegateImpl.addSkinView(view, skinAttrs);
+    }
+
+    @Override
+    public SkinView addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
+        return mSkinDelegateImpl.addSkinView(view, attrName, resEntryName, resTypeName);
     }
 }

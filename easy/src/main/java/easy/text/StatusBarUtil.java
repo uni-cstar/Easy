@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.v4.widget.DrawerLayout;
+import android.view.GestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;

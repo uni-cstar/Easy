@@ -5,4 +5,5 @@
 
     <item name="easy_quick_vh_tag" type="id" />
 
+    <item name="easy_tap_gesture_tag" type="id" />
 </resources>

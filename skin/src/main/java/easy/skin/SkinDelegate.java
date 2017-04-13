@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -201,14 +200,15 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
      * @param view
      * @param skinAttrs
      */
-    private void injectSkinView(View view, List<SkinAttr> skinAttrs) {
+    private SkinView injectSkinView(View view, List<SkinAttr> skinAttrs) {
         if (SkinUtil.isNullOrEmpty(skinAttrs))
-            return;
+            return null;
         SkinView skinView = new SkinView(view, skinAttrs);
         mSkinViewMap.put(view, skinView);
         if (SkinManager.getInstance().isUseSkin()) {
             skinView.apply();
         }
+        return skinView;
     }
 
 
@@ -248,15 +248,15 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
      * @param skinAttrs 换肤属性 {@link SkinAttrSupport#genSkinAttr(String, String, String)}
      */
     @Override
-    public void addSkinView(View view, List<SkinAttr> skinAttrs) {
-        injectSkinView(view, skinAttrs);
+    public SkinView addSkinView(View view, List<SkinAttr> skinAttrs) {
+        return injectSkinView(view, skinAttrs);
     }
 
     @Override
-    public void addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
+    public SkinView addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
         SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, resEntryName, resTypeName);
         List<SkinAttr> skinAttrs = Collections.singletonList(skinAttr);
-        addSkinView(view, skinAttrs);
+        return addSkinView(view, skinAttrs);
     }
 
 }
