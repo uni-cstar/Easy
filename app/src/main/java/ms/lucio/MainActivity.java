@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import easy.skin.SkinConst;
 import easy.skin.SkinManager;
 import easy.skin.attr.SkinAttrSupport;
 import easy.skin.attr.TextAttr;
 import easy.skin.factory.SkinAttrFactory;
-import easy.view.gesture.DoubleBackPressed;
+import easy.view.gesture.EasyDoubleBackToExit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         SkinAttrSupport.addSupportAttr(SkinConst.ATTR_NAME_TEXT,new TextAttr());
         SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
         startActivity(UiTestActivity.class);
-        doubleBackPressed = new DoubleBackPressed(this, DoubleBackPressed.Type.MOVE_TO_BACK);
+        doubleBackPressed = new EasyDoubleBackToExit(this, EasyDoubleBackToExit.Type.MOVE_TO_BACK);
         ((Button)this.findViewById(R.id.download)).setText("324234");
     }
 
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(it);
     }
 
-    DoubleBackPressed doubleBackPressed;
+    EasyDoubleBackToExit doubleBackPressed;
     @Override
     public void onBackPressed() {
         doubleBackPressed.onBackPressed();

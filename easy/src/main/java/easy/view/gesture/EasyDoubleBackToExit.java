@@ -11,7 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  * Created by Lucio on 17/4/13.
  * 按两次退出程序
  */
-public class DoubleBackPressed {
+public class EasyDoubleBackToExit {
 
     Activity mActivity;
     //上一次点击时间
@@ -27,7 +27,7 @@ public class DoubleBackPressed {
 
     OnBackPressedListener mListener;
 
-    public DoubleBackPressed(Activity activity, @Type int type) {
+    public EasyDoubleBackToExit(Activity activity, @Type int type) {
         mActivity = activity;
         mIntervalTime = 2000;
         mToastContent = type == Type.FINISH ? TOAST_FINISH : TOAST_MOVE_TO_BACK;
@@ -41,7 +41,7 @@ public class DoubleBackPressed {
      * @param time 时间 ms
      * @return
      */
-    public DoubleBackPressed setIntervalTime(long time) {
+    public EasyDoubleBackToExit setIntervalTime(long time) {
         mIntervalTime = time;
         return this;
     }
@@ -53,7 +53,7 @@ public class DoubleBackPressed {
      * @param content
      * @return
      */
-    public DoubleBackPressed setToastContent(String content) {
+    public EasyDoubleBackToExit setToastContent(String content) {
         mToastContent = content;
         return this;
     }
@@ -64,7 +64,7 @@ public class DoubleBackPressed {
      * @param listener
      * @return
      */
-    public DoubleBackPressed setOnBackPressedListener(OnBackPressedListener listener) {
+    public EasyDoubleBackToExit setOnBackPressedListener(OnBackPressedListener listener) {
         mListener = listener;
         return this;
     }
@@ -104,7 +104,7 @@ public class DoubleBackPressed {
     /**
      * 退出类型
      */
-    @IntDef({DoubleBackPressed.Type.FINISH, DoubleBackPressed.Type.MOVE_TO_BACK})
+    @IntDef({EasyDoubleBackToExit.Type.FINISH, EasyDoubleBackToExit.Type.MOVE_TO_BACK})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
 

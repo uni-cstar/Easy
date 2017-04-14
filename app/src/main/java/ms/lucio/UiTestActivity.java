@@ -6,9 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import easy.view.gesture.DoubleBackPressed;
+import easy.view.gesture.EasyDoubleBackToExit;
 import easy.view.gesture.EasyGesture;
-import io.reactivex.annotations.BackpressureSupport;
 
 public class UiTestActivity extends AppCompatActivity {
 
@@ -33,8 +32,8 @@ public class UiTestActivity extends AppCompatActivity {
                 return true;
             }
         });
-        doubleBackPressed = new DoubleBackPressed(this, DoubleBackPressed.Type.FINISH);
-        doubleBackPressed.setOnBackPressedListener(new DoubleBackPressed.OnBackPressedListener() {
+        doubleBackPressed = new EasyDoubleBackToExit(this, EasyDoubleBackToExit.Type.FINISH);
+        doubleBackPressed.setOnBackPressedListener(new EasyDoubleBackToExit.OnBackPressedListener() {
             @Override
             public boolean onFirstBackPressed() {
                 Toast.makeText(UiTestActivity.this,"自定义toast",Toast.LENGTH_SHORT).show();
@@ -70,7 +69,7 @@ public class UiTestActivity extends AppCompatActivity {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
 
-    DoubleBackPressed doubleBackPressed;
+    EasyDoubleBackToExit doubleBackPressed;
     @Override
     public void onBackPressed() {
         doubleBackPressed.onBackPressed();
