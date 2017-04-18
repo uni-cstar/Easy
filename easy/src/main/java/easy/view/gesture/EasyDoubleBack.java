@@ -11,27 +11,39 @@ import java.lang.annotation.RetentionPolicy;
  * Created by Lucio on 17/4/13.
  * 按两次退出程序
  */
-public class EasyDoubleBackToExit {
+public class EasyDoubleBack {
 
-    Activity mActivity;
-    //上一次点击时间
-    private long mLastClickTime = 0;
-    private String mToastContent;
-    int mBackType = Type.FINISH;
-    //间隔时间
-    private long mIntervalTime;
+    /**
+     * 移到后台
+     */
+    public static final int TYPE_MOVE_TO_BACK = 1;
+    /**
+     * 退出
+     */
+    public static final int TYPE_FINISH = 0;
 
     static final String TOAST_FINISH = "再按一次退出程序";
     static final String TOAST_MOVE_TO_BACK = "再按一次回到桌面";
 
 
+    Activity mActivity;
+    //上一次点击时间
+    private long mLastClickTime = 0;
+    private String mToastContent;
+    int mBackType = TYPE_FINISH;
+    //间隔时间
+    private long mIntervalTime;
     OnBackPressedListener mListener;
 
-    public EasyDoubleBackToExit(Activity activity, @Type int type) {
+    private EasyDoubleBack(Activity activity, @Type int type) {
         mActivity = activity;
         mIntervalTime = 2000;
-        mToastContent = type == Type.FINISH ? TOAST_FINISH : TOAST_MOVE_TO_BACK;
+        mToastContent = type == TYPE_FINISH ? TOAST_FINISH : TOAST_MOVE_TO_BACK;
         mBackType = type;
+    }
+
+    public static EasyDoubleBack create(Activity activity, @Type int type) {
+        return new EasyDoubleBack(activity, type);
     }
 
     /**
@@ -41,7 +53,7 @@ public class EasyDoubleBackToExit {
      * @param time 时间 ms
      * @return
      */
-    public EasyDoubleBackToExit setIntervalTime(long time) {
+    public EasyDoubleBack setIntervalTime(long time) {
         mIntervalTime = time;
         return this;
     }
@@ -53,7 +65,7 @@ public class EasyDoubleBackToExit {
      * @param content
      * @return
      */
-    public EasyDoubleBackToExit setToastContent(String content) {
+    public EasyDoubleBack setToastContent(String content) {
         mToastContent = content;
         return this;
     }
@@ -64,7 +76,7 @@ public class EasyDoubleBackToExit {
      * @param listener
      * @return
      */
-    public EasyDoubleBackToExit setOnBackPressedListener(OnBackPressedListener listener) {
+    public EasyDoubleBack setOnBackPressedListener(OnBackPressedListener listener) {
         mListener = listener;
         return this;
     }
@@ -76,7 +88,7 @@ public class EasyDoubleBackToExit {
     public void onBackPressed() {
         if (System.currentTimeMillis() - mLastClickTime < mIntervalTime) {
             mLastClickTime = 0;
-            if (mBackType == Type.MOVE_TO_BACK) {
+            if (mBackType == TYPE_MOVE_TO_BACK) {
                 mActivity.moveTaskToBack(true);
             } else {
                 mActivity.finish();
@@ -104,19 +116,9 @@ public class EasyDoubleBackToExit {
     /**
      * 退出类型
      */
-    @IntDef({EasyDoubleBackToExit.Type.FINISH, EasyDoubleBackToExit.Type.MOVE_TO_BACK})
+    @IntDef({TYPE_FINISH, TYPE_MOVE_TO_BACK})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Type {
-
-        /**
-         * 退出
-         */
-        int FINISH = 0;
-
-        /**
-         * 移到后台
-         */
-        int MOVE_TO_BACK = 1;
     }
 
 }

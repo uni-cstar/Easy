@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <cn.bingoogolapple.badgeview.BGABadgeImageView
+        android:id="@+id/tab_image"
+        android:layout_width="@dimen/size_tab_image"
+        android:layout_height="@dimen/size_tab_image"
+        android:layout_centerHorizontal="true"
+        tools:src="@drawable/easy_ic_error" />
+
+
+    <TextView
+        android:id="@+id/tab_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_image"
+        android:layout_centerHorizontal="true"
+        android:text="消息" />
+
+</RelativeLayout>

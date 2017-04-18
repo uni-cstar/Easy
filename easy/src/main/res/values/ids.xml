@@ -6,4 +6,10 @@
     <item name="easy_quick_vh_tag" type="id" />
 
     <item name="easy_tap_gesture_tag" type="id" />
+
+    <item name="easy_tab_id_badge_wrapper" type="id" />
+    <item name="easy_tab_id_badge_anchor" type="id" />
+    <item name="easy_tab_id_image" type="id" />
+    <item name="easy_tab_id_text" type="id" />
+
 </resources>

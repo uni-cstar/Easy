@@ -53,7 +53,6 @@ public class EasyGesture {
     }
 
 
-
     /**
      * 移除Easy tap 手势
      *
@@ -65,6 +64,5 @@ public class EasyGesture {
             return;
         view.setTag(R.id.easy_tap_gesture_tag, null);
     }
-
 
 }

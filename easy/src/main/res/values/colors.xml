@@ -12,4 +12,8 @@
 
     <color name="light_gray">#cccccc</color>
 
+
+    <!--easy tab host 分割线颜色-->
+    <color name="easy_tab_host_divider">#555555</color>
+
 </resources>
