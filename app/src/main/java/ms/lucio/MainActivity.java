@@ -15,6 +15,7 @@ import easy.skin.attr.SkinAttrSupport;
 import easy.skin.attr.TextAttr;
 import easy.skin.factory.SkinAttrFactory;
 import easy.view.gesture.EasyDoubleBack;
+import ms.lucio.tab.EasyTabSampleTExt;
 
 public class MainActivity extends AppCompatActivity {
 

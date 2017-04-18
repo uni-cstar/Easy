@@ -22,15 +22,19 @@ public class EasyTabHost extends LinearLayout {
 
     protected int mCurrentTab = -1;
 
-    private List<EasyTabItem> mTabItems = new ArrayList<>();
+    private List<IEasyTabItem> mTabItems = new ArrayList<>();
 
     /**
      * 用户监听回调
      */
-    private OnEasyTabSelectListener mCustomTabSelectListener;
+    private OnEasyTabChangedListener mTabChangedListener;
+
+    private OnEasyTabDoubleClickListener mTabDoubleClickListener;
 
     private Paint mDividerPaint;
     private int mDividerWidth = 1;
+
+    private EasyTabWidget mTabWidget;
 
     public EasyTabHost(Context context) {
         this(context, null);
@@ -49,107 +53,98 @@ public class EasyTabHost extends LinearLayout {
     }
 
     /**
+     * 初始化
+     */
+    public void setup() {
+        mCurrentTab = -1;
+        mTabItems.clear();
+        if((mTabWidget = (EasyTabWidget) findViewById(R.id.easyTabs)) == null){
+            mTabWidget = new EasyTabWidget(getContext());
+            LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+            mTabWidget.setLayoutParams(lp);
+            mTabWidget.setOrientation(HORIZONTAL);
+            mTabWidget.setId(R.id.easyTabs);
+            this.addView(mTabWidget);
+        }
+    }
+
+    /**
      * 设置分割线颜色
      *
      * @param color
      */
     public void setDividerColor(int color) {
         mDividerPaint.setColor(color);
-        this.postInvalidate(0,0,this.getWidth(),mDividerWidth);
+        this.postInvalidate(0, 0, this.getWidth(), mDividerWidth);
     }
 
     /**
      * 设置分割线粗细
+     *
      * @param px
      */
     public void setDividerStroke(int px) {
         mDividerWidth = px;
         mDividerPaint.setStrokeWidth(px);
-        this.postInvalidate(0,0,this.getWidth(),mDividerWidth);
+        this.postInvalidate(0, 0, this.getWidth(), mDividerWidth);
     }
 
     /**
-     * 初始化
-     */
-    public void setup() {
-        mCurrentTab = -1;
-        int count = this.getChildCount();
-        if (count == 0)
-            return;
-        List<EasyTabItem> items = new ArrayList<>(count);
-        for (int i = 0; i < count; i++) {
-            Object object = this.getChildAt(i);
-            if (object instanceof EasyTabItem) {
-                items.add((EasyTabItem) object);
-            } else {
-                throw new RuntimeException("child view must implements EasyTabItem");
-            }
-        }
-        setup(items, 0);
-    }
-
-    /**
-     * 初始化
-     * @param tabItems
-     * @param index
-     */
-    public void setup(List<EasyTabItem> tabItems, int index) {
-        mCurrentTab = -1;
-        mTabItems.clear();
-        mTabItems.addAll(tabItems);
-        this.removeAllViews();
-
-        for (int i = 0; i < mTabItems.size(); i++) {
-            addTabView(i, mTabItems.get(i));
-        }
-
-        if (index >= 0 && index < mTabItems.size()) {
-            mSelectListener.onEasyTabSelected(index);
-        } else {
-            mSelectListener.onEasyTabSelected(0);
-        }
-    }
-
-
-    /**
-     * 添加tab view
-     * @param index
+     * 添加tab
      * @param tabItem
      */
-    private void addTabView(final int index, EasyTabItem tabItem) {
+    public void addTab(IEasyTabItem tabItem) {
         View view = tabItem.getView();
         view.setClickable(true);
         view.setFocusableInTouchMode(true);
-        EasyGesture.addTapGesture(view, new SimpleTabSelectListener(mSelectListener, index));
-        setupTabView(index, tabItem);
-        this.addView(view, index);
+        EasyGesture.addTapGesture(view, new SimpleTabSelectListener(mSelectListener, mTabWidget.getChildCount()));
+        setupTabView(tabItem);
+        mTabWidget.addView(view);
+
+        if (mCurrentTab == -1) {
+            setCurrentTab(0);
+        }
+        mTabItems.add(tabItem);
     }
 
-    /**
-     * 初始化tabview
-     * @param index
-     * @param tabItem
-     */
-    private void setupTabView(int index, EasyTabItem tabItem) {
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT);
+    //初始化tabview 参数
+    private void setupTabView(IEasyTabItem tabItem) {
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT);
         lp.weight = 1.0f;
         tabItem.getView().setLayoutParams(lp);
     }
 
     /**
-     * 获取当前选中的tab
+     * 获取当前tab
      * @return
      */
-    public int getCurrentTabTag() {
+    public int getCurrentTab() {
         return mCurrentTab;
     }
 
     /**
-     * 设置回调
+     * 设置当前tab
+     * @param index
+     */
+    public void setCurrentTab(int index) {
+        mSelectListener.onEasyTabSelected(index);
+    }
+
+    /**
+     * 设置单击回调
+     *
      * @param listener
      */
-    public void setOnEasyTabSelectListener(OnEasyTabSelectListener listener) {
-        mCustomTabSelectListener = listener;
+    public void setOnEasyTabChangedListener(OnEasyTabChangedListener listener) {
+        mTabChangedListener = listener;
+    }
+
+    /**
+     * 设置双击回调
+     * @param listener
+     */
+    public void setOnEasyTabDoubleClickListener(OnEasyTabDoubleClickListener listener) {
+        mTabDoubleClickListener = listener;
     }
 
     /**
@@ -170,25 +165,29 @@ public class EasyTabHost extends LinearLayout {
             mCurrentTab = index;
             mTabItems.get(mCurrentTab).onTabSelected(true);
 
-            if (mCustomTabSelectListener != null) {
-                mCustomTabSelectListener.onEasyTabSelected(mCurrentTab);
+            if (mTabChangedListener != null) {
+                mTabChangedListener.onEasyTabSelected(mCurrentTab);
             }
         }
 
         @Override
         public void onEasyTabDoubleClick(int index) {
-            if (mCustomTabSelectListener != null) {
-                mCustomTabSelectListener.onEasyTabDoubleClick(index);
+            if (mTabDoubleClickListener != null) {
+                mTabDoubleClickListener.onEasyTabDoubleClick(index);
             }
         }
 
     };
 
-
-    public interface OnEasyTabSelectListener {
+    public interface OnEasyTabChangedListener {
         void onEasyTabSelected(int index);
+    }
 
+    public interface OnEasyTabDoubleClickListener {
         void onEasyTabDoubleClick(int index);
+    }
+
+    private interface OnEasyTabSelectListener extends OnEasyTabChangedListener, OnEasyTabDoubleClickListener {
     }
 
 
@@ -224,7 +223,7 @@ public class EasyTabHost extends LinearLayout {
     public void draw(Canvas canvas) {
         super.draw(canvas);
         //绘制分割线
-        if (this.getWidth() > 0)
-            canvas.drawLine(0, 0, this.getWidth(), 0, mDividerPaint);
+        if (mTabWidget.getWidth() > 0)
+            canvas.drawLine(mTabWidget.getX(), mTabWidget.getY(), mTabWidget.getWidth(), mTabWidget.getY(), mDividerPaint);
     }
 }

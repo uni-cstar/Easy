@@ -4,12 +4,23 @@
     android:id="@+id/activity_easy_tab_sample_text"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ms.lucio.EasyTabSampleTExt">
+    tools:context="ms.lucio.tab.EasyTabSampleTExt">
 
-    <easy.view.tab.EasyTabHost
+    <easy.view.tab.EasyFragmentTabHost
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_tab_host"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="@color/black" />
+        android:orientation="vertical">
+        <FrameLayout
+            android:id="@id/easyTabContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <easy.view.tab.EasyTabWidget
+            android:id="@id/easyTabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_tab_host"/>
+
+    </easy.view.tab.EasyFragmentTabHost>
 </RelativeLayout>

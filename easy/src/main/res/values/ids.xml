@@ -7,6 +7,8 @@
 
     <item name="easy_tap_gesture_tag" type="id" />
 
+    <item name="easyTabContent" type="id" />
+    <item name="easyTabs" type="id" />
     <item name="easy_tab_id_badge_wrapper" type="id" />
     <item name="easy_tab_id_badge_anchor" type="id" />
     <item name="easy_tab_id_image" type="id" />

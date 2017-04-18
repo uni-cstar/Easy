@@ -20,7 +20,7 @@
         <activity android:name=".DownloadSampleActivity" />
         <activity android:name=".skin.SkinSampleActivity" />
         <activity android:name=".UiTestActivity" />
-        <activity android:name=".EasyTabSampleTExt"></activity>
+        <activity android:name=".tab.EasyTabSampleTExt"></activity>
     </application>
 
 </manifest>
