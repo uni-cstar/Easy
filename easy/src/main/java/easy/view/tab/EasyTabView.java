@@ -8,18 +8,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import easy.R;
+import easy.badge.HorizontalGravity;
+import easy.badge.VerticalGravity;
+import easy.badge.view.BadgeRelativeLayout;
 import easy.utils.ResourceUtil;
-import ms.badge.HorizontalGravity;
-import ms.badge.VerticalGravity;
-import ms.badge.view.BadgeRelativeLayout;
-
 /**
  * Created by Lucio on 17/4/14.
  * 市面上常见底部tab item的实现。
  * 实现了未读数红圈数字，以及拖动销毁等：借助https://github.com/bingoogolapple/BGABadgeView-Android 实现
  * 建议实现方式是创建EasyTabView的子类，在里面设置ImageView 和TextView的相关资源值
  */
-public class EasyTabView extends BadgeRelativeLayout{
+public class EasyTabView extends BadgeRelativeLayout {
 
     Context mContext;
     ImageView mImageView;

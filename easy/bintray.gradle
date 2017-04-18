@@ -1,7 +1,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def proj_version = '0.2.2'
+def proj_version = '0.2.3'
 def proj_artifact_id = 'easy'
 def proj_group='ms.easy'
 def proj_pom_name = 'Easy for Android'
@@ -61,7 +61,7 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 artifacts {
 //    archives javadocJar
-//    archives sourcesJar
+    archives sourcesJar
 }
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())

@@ -7,7 +7,6 @@ import android.view.View;
 /**
  * Created by Lucio on 17/4/18.
  */
-
 public class EasyFragTabView extends EasyTabView implements IFragTabItem{
 
     private String mTag;
@@ -26,4 +25,5 @@ public class EasyFragTabView extends EasyTabView implements IFragTabItem{
     public String getFragTag() {
         return mTag;
     }
+
 }
