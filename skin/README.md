@@ -13,8 +13,8 @@
   标记属性：在布局文件中进行命名空间申明，并为需要进行皮肤切换的控件设置属性标记。
   这两种方式都支持属性后缀切换，也就是在同一套皮肤中（可以是插件皮肤），可以提供不同后缀结尾的属性来达到快速的皮肤切换。
   ## 未来计划
-  * 实现动态添加的View的皮肤切换
-  * 增加文字字体的切换
+  <del>* 实现动态添加的View的皮肤切换</del>
+  <del>* 增加文字字体的切换</del>
   * 提供更多默认属性的实现
 
 
@@ -38,6 +38,19 @@
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
+  ## Release v1.0.4
+     * 新增字体切换支持
+       提供程序内以及皮肤包中字体切换，要求是字体文件路径必须为assets/fonts/{xxx.ttf}
+     * 使用步骤
+        `SkinManager`下提供了更改字体的相关方法
+        启用功能，默认关闭
+       `public void setEnableFontChange(boolean enable)`
+
+       切换字体
+       `public void changeFont(String fontName)`
+       `public void changeFont(String fontName, @FontType int fontType)`
+       还原默认字体
+       `public void restoreDefaultFont()`
   ## Release v1.0.3
      * 新增动态View换肤支持
        `ISkinDelegate.addSkinView(View view, List<SkinAttr> skinAttrs)`

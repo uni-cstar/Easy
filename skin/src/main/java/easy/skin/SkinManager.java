@@ -79,10 +79,10 @@ public class SkinManager {
     /**
      * 是否存在皮肤切换
      */
-    private boolean mIsUseSkinPlugin,mIsInit;
+    private boolean mIsUseSkinPlugin, mIsInit;
 
-    @FontType
-    private int mFontType = FONT_DISABLE;
+    private boolean mEnableFontChange = false;
+
 
     /**
      * 皮肤 preferences，保存一些常量
@@ -112,10 +112,11 @@ public class SkinManager {
         return SingletonHolder.instance;
     }
 
-    private void checkInit(){
-        if(!mIsInit)
+    private void checkInit() {
+        if (!mIsInit)
             throw new RuntimeException("Please call the init method ");
     }
+
     /**
      * 获取资源管理器
      *
@@ -147,11 +148,13 @@ public class SkinManager {
 
     /**
      * 设置资源未找到时是否忽略设置控件对应值
+     *
      * @param ignore
      */
-    public void setIgnoreWhenAttrNotFound(boolean ignore){
+    public void setIgnoreWhenAttrNotFound(boolean ignore) {
         SkinAttrSupport.setIgnoreWhenAttrNotFound(ignore);
     }
+
     /**
      * 初始化
      * 建议在{@link Application#onCreate()}处进行调用
@@ -185,47 +188,64 @@ public class SkinManager {
     }
 
     /**
-     * 设置字体
-     * @param type
+     * 是否允许字体切换
+     *
+     * @param enable
      */
-    public void setFontChangeType(@FontType int type){
-        mFontType = type;
-        if(mFontType == FONT_INNER){
-            TypefaceUtils.getTypeface(mContext,mContext.getAssets());
-        }else if(mFontType == FONT_EXTERNAL){
-            TypefaceUtils.getTypeface(mContext,mResources.getAssets());
-        }else{
-            TypefaceUtils.restoreDefaultTypeface(mContext);
-        }
+    public void setEnableFontChange(boolean enable) {
+        mEnableFontChange = enable;
+
     }
 
-    public void changeFont(String fontName){
-        if(mFontType == FONT_INNER){
-            TypefaceUtils.loadTypeface(mContext,fontName,mContext.getAssets());
-        }else if(mFontType == FONT_EXTERNAL){
-            TypefaceUtils.loadTypeface(mContext,fontName,mResources.getAssets());
-        }else{
-            TypefaceUtils.restoreDefaultTypeface(mContext);
+    /**
+     * 切换字体
+     * 如果当前使用了皮肤包，则从皮肤包中读取字体文件，反之则从程序内读取字体文件
+     *
+     * @param fontName
+     */
+    public void changeFont(String fontName) {
+        changeFont(fontName, isUseSkin() ? FONT_EXTERNAL : FONT_INNER);
+    }
+
+    /**
+     * 切换字体
+     *
+     * @param fontName 字体文件名
+     * @param fontType 字体来源类型
+     */
+    public void changeFont(String fontName, @FontType int fontType) {
+        if (fontType == FONT_EXTERNAL) {
+            TypefaceUtils.loadTypeface(mContext, fontName, mResources.getAssets());
+        } else {
+            TypefaceUtils.loadTypeface(mContext, fontName, mContext.getAssets());
         }
         notifySkinFontChangedListeners();
     }
 
-    public Typeface getCurrentTypeface(){
+    /**
+     * 设置为默认字体
+     */
+    public void restoreDefaultFont() {
+        TypefaceUtils.restoreDefaultTypeface(mContext);
+        notifySkinFontChangedListeners();
+    }
+
+    /**
+     * 获取当前字体
+     * @return
+     */
+    public Typeface getCurrentTypeface() {
         return TypefaceUtils.getCurrentTypeface();
     }
 
     /**
      * 是否切换字体
+     *
      * @return
      */
-    public boolean isFontChangeEnable(){
-        return mFontType == FONT_INNER || mFontType == FONT_EXTERNAL;
+    public boolean isFontChangeEnable() {
+        return mEnableFontChange;
     }
-
-    /**
-     * 禁用字体切换
-     */
-    public static final int FONT_DISABLE = 0;
 
     /**
      * 程序内字体切换
@@ -237,9 +257,9 @@ public class SkinManager {
      */
     public static final int FONT_EXTERNAL = 2;
 
-    @IntDef({FONT_DISABLE,FONT_INNER,FONT_EXTERNAL})
+    @IntDef({FONT_INNER, FONT_EXTERNAL})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface FontType{
+    public @interface FontType {
 
     }
 
@@ -318,9 +338,7 @@ public class SkinManager {
         mSkinPackageName = mContext.getPackageName();
         //重置资源管理器
         mResourceManager.update(mContext, mResources, mSkinPackageName, mSkinSuffix);
-        setFontChangeType(FONT_DISABLE);
         notifySkinChangedListeners();
-        notifySkinFontChangedListeners();
     }
 
     /**
@@ -465,7 +483,6 @@ public class SkinManager {
             listener.onSkinChanged();
         }
     }
-
 
 
     /**

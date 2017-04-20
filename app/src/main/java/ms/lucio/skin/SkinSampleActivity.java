@@ -38,11 +38,11 @@ public class SkinSampleActivity extends BaseSkinActivity implements View.OnClick
     public void onClick(View v) {
         if(v.getId() == R.id.btn2){
             SkinManager.getInstance().restoreDefaultSkin();
+            SkinManager.getInstance().restoreDefaultFont();
         }else if(v.getId() == R.id.btn1){
             String suffix = editText.getText().toString();
             if("red".equals(suffix) || "blue".equals(suffix)){
-                SkinManager.getInstance().setFontChangeType(SkinManager.FONT_INNER);
-                SkinManager.getInstance().changeFont("hksnzt.ttf");
+                SkinManager.getInstance().changeFont(SkinManager.getInstance().isUseSkin()?"kt.ttf":"hksnzt.ttf");
                 SkinManager.getInstance().changeSkin(suffix);
             }else{
                 Toast.makeText(v.getContext(),"输入错误，必须是red or blue",Toast.LENGTH_SHORT).show();
@@ -65,8 +65,7 @@ public class SkinSampleActivity extends BaseSkinActivity implements View.OnClick
                 @Override
                 public void onSkinLoadSuccess() {
                     Log.d("SkinSampleActivity","onSkinLoadSuccess");
-                    SkinManager.getInstance().setFontChangeType(SkinManager.FONT_EXTERNAL);
-                    SkinManager.getInstance().changeFont("kt.ttf");
+                    SkinManager.getInstance().changeFont(SkinManager.getInstance().isUseSkin()?"kt.ttf":"hksnzt.ttf");
                 }
             });
         }

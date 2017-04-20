@@ -25,7 +25,7 @@ public class App extends BaseSkinApplication{
         super.onCreate();
         SkinAttrSupport.addSupportAttr(SkinConst.ATTR_NAME_TEXT,new TextAttr());
         SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
-        SkinManager.getInstance().setFontChangeType(SkinManager.FONT_INNER);
+        SkinManager.getInstance().setEnableFontChange(true);
 //        SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
         try {
             copyBigDataToSD();
