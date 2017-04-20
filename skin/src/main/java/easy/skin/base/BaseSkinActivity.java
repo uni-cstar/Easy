@@ -60,4 +60,9 @@ public class BaseSkinActivity extends AppCompatActivity implements ISkinDelegate
     public void addFontChangeView(TextView textView) {
         mSkinDelegateImpl.addFontChangeView(textView);
     }
+
+    @Override
+    public void removeFontChangeView(TextView textView) {
+        mSkinDelegateImpl.removeFontChangeView(textView);
+    }
 }

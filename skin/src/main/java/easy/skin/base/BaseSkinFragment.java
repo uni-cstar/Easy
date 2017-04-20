@@ -97,4 +97,10 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
             mSkinDelegateImpl.addFontChangeView(textView);
     }
 
+    @Override
+    public void removeFontChangeView(TextView textView) {
+        if (mSkinDelegateImpl != null)
+            mSkinDelegateImpl.removeFontChangeView(textView);
+    }
+
 }

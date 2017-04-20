@@ -234,7 +234,6 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     public void removeAllSkinView(View view) {
         //移除view
         removeSkinView(view);
-
         //移除view下的子view
         if (view instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) view;
@@ -251,7 +250,13 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     public void removeSkinView(View view) {
         if (view == null)
             return;
+
         mSkinViewMap.remove(view);
+
+        if ((view instanceof TextView)
+                && SkinManager.getInstance().isFontChangeEnable()) {
+            removeFontChangeView((TextView) view);
+        }
     }
 
     /**
@@ -281,5 +286,14 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         }
         mFontRepository.add(textView);
     }
+
+    @Override
+    public void removeFontChangeView(TextView textView) {
+        if (mFontRepository == null) {
+            return;
+        }
+        mFontRepository.remove(textView);
+    }
+
 
 }

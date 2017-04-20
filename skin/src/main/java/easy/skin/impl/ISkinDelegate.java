@@ -39,4 +39,6 @@ public interface ISkinDelegate {
      * @param textView
      */
     void addFontChangeView(TextView textView);
+
+    void removeFontChangeView(TextView textView);
 }
