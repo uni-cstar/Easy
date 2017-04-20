@@ -15,6 +15,7 @@ import easy.skin.attr.SkinAttrSupport;
 import easy.skin.attr.TextAttr;
 import easy.skin.factory.SkinAttrFactory;
 import easy.view.gesture.EasyDoubleBack;
+import ms.lucio.skin.SkinSampleActivity;
 import ms.lucio.tab.EasyTabSampleTExt;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,10 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SkinManager.getInstance().init(this);
-        SkinAttrSupport.addSupportAttr(SkinConst.ATTR_NAME_TEXT,new TextAttr());
-        SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
-        startActivity(EasyTabSampleTExt.class);
+
+        startActivity(SkinSampleActivity.class);
         WindowManager mWindowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         WindowManager mWindowManager2 = (WindowManager) this.getApplication().getSystemService(Application.WINDOW_SERVICE);
         doubleBackPressed = EasyDoubleBack.create(this, EasyDoubleBack.TYPE_MOVE_TO_BACK);

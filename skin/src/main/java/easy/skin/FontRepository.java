@@ -6,6 +6,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import easy.skin.util.SkinUtil;
+
 /**
  * Created by Lucio on 17/4/19.
  */
@@ -35,6 +37,9 @@ public class FontRepository {
     }
 
     public void applyFont(Typeface tf) {
+
+        if (SkinUtil.isNullOrEmpty(mTextViews))
+            return;
         for (TextView textView : mTextViews) {
             textView.setTypeface(tf);
         }

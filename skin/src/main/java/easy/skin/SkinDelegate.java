@@ -24,13 +24,14 @@ import easy.skin.attr.SkinAttr;
 import easy.skin.attr.SkinAttrSupport;
 import easy.skin.impl.ISkinActivityDelegate;
 import easy.skin.impl.SkinChangedListener;
+import easy.skin.impl.SkinFontChangedListener;
 import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/3/30.
  * Skin 委托管理,可以用在Activity管理界面皮肤切换。
  */
-public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener, ISkinActivityDelegate {
+public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener, SkinFontChangedListener,ISkinActivityDelegate {
 
 
     private AppCompatActivity mActivity;
@@ -87,6 +88,7 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         LayoutInflater layoutInflater = mActivity.getLayoutInflater();
         LayoutInflaterCompat.setFactory(layoutInflater, this);
         SkinManager.getInstance().addSkinChangedListener(this);
+        SkinManager.getInstance().addSkinFontChangedListener(this);
     }
 
     /**
@@ -104,6 +106,7 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     @Override
     public void onDestroy() {
         SkinManager.getInstance().removeSkinChangedListener(this);
+        SkinManager.getInstance().removeSkinFontChangedListener(this);
     }
 
     /**
@@ -144,6 +147,17 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     public void onSkinChanged() {
         applySkin();
         changeStatusColor();
+    }
+
+    @Override
+    public void onSkinFontChanged() {
+        applyFont();
+    }
+
+    private void applyFont() {
+        if(mFontRepository == null)
+            return;
+        mFontRepository.applyFont(SkinManager.getInstance().getCurrentTypeface());
     }
 
     /**
@@ -294,6 +308,7 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         }
         mFontRepository.remove(textView);
     }
+
 
 
 }

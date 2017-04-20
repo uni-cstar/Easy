@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import easy.skin.attr.SkinAttrSupport;
 import easy.skin.factory.SkinAttrFactory;
 import easy.skin.impl.SkinChangedListener;
 import easy.skin.impl.SkinCompatImpl;
+import easy.skin.impl.SkinFontChangedListener;
 import easy.skin.impl.SkinLoadListener;
 import easy.skin.util.SkinPrefUtil;
 import easy.skin.util.SkinUtil;
@@ -91,6 +93,8 @@ public class SkinManager {
      * 回调
      */
     private List<SkinChangedListener> mSkinChangedListeners;
+
+    private List<SkinFontChangedListener> mSkinFontChangedListeners;
 
     private SkinManager() {
         mSkinCompat = new SkinCompatDef();
@@ -195,6 +199,21 @@ public class SkinManager {
         }
     }
 
+    public void changeFont(String fontName){
+        if(mFontType == FONT_INNER){
+            TypefaceUtils.loadTypeface(mContext,fontName,mContext.getAssets());
+        }else if(mFontType == FONT_EXTERNAL){
+            TypefaceUtils.loadTypeface(mContext,fontName,mResources.getAssets());
+        }else{
+            TypefaceUtils.restoreDefaultTypeface(mContext);
+        }
+        notifySkinFontChangedListeners();
+    }
+
+    public Typeface getCurrentTypeface(){
+        return TypefaceUtils.getCurrentTypeface();
+    }
+
     /**
      * 是否切换字体
      * @return
@@ -206,17 +225,17 @@ public class SkinManager {
     /**
      * 禁用字体切换
      */
-    static final int FONT_DISABLE = 0;
+    public static final int FONT_DISABLE = 0;
 
     /**
      * 程序内字体切换
      */
-    static final int FONT_INNER = 1;
+    public static final int FONT_INNER = 1;
 
     /**
      * 皮肤包字体切换
      */
-    static final int FONT_EXTERNAL = 2;
+    public static final int FONT_EXTERNAL = 2;
 
     @IntDef({FONT_DISABLE,FONT_INNER,FONT_EXTERNAL})
     @Retention(RetentionPolicy.SOURCE)
@@ -299,8 +318,9 @@ public class SkinManager {
         mSkinPackageName = mContext.getPackageName();
         //重置资源管理器
         mResourceManager.update(mContext, mResources, mSkinPackageName, mSkinSuffix);
-        TypefaceUtils.restoreDefaultTypeface(mContext);
+        setFontChangeType(FONT_DISABLE);
         notifySkinChangedListeners();
+        notifySkinFontChangedListeners();
     }
 
     /**
@@ -447,4 +467,41 @@ public class SkinManager {
     }
 
 
+
+    /**
+     * 添加 字体切换 Listener
+     *
+     * @param listener
+     */
+    public void addSkinFontChangedListener(SkinFontChangedListener listener) {
+        if (mSkinFontChangedListeners == null) {
+            mSkinFontChangedListeners = new ArrayList<SkinFontChangedListener>();
+        }
+
+        //预防重复添加
+        if (!mSkinFontChangedListeners.contains(listener)) {
+            mSkinFontChangedListeners.add(listener);
+        }
+    }
+
+    /**
+     * 移除监听
+     *
+     * @param listener
+     */
+    public void removeSkinFontChangedListener(SkinFontChangedListener listener) {
+        if (mSkinFontChangedListeners == null) return;
+        mSkinFontChangedListeners.remove(listener);
+    }
+
+    /**
+     * 通知字体切换
+     */
+    public void notifySkinFontChangedListeners() {
+        checkInit();
+        if (mSkinFontChangedListeners == null) return;
+        for (SkinFontChangedListener listener : mSkinFontChangedListeners) {
+            listener.onSkinFontChanged();
+        }
+    }
 }
