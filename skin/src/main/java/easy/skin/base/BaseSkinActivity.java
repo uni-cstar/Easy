@@ -3,6 +3,7 @@ package easy.skin.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -53,5 +54,10 @@ public class BaseSkinActivity extends AppCompatActivity implements ISkinDelegate
     @Override
     public SkinView addSkinView(View view, String attrName, String resEntryName, String resTypeName) {
         return mSkinDelegateImpl.addSkinView(view, attrName, resEntryName, resTypeName);
+    }
+
+    @Override
+    public void addFontChangeView(TextView textView) {
+        mSkinDelegateImpl.addFontChangeView(textView);
     }
 }

@@ -13,7 +13,11 @@ import easy.skin.attr.SkinAttr;
  * 混合属性工厂：必须命名空间申明并且标记属性enable＝true，且关联属性值为指定前缀命名开头
  */
 
-public class BlendSkinAttrFactory extends PrefixSkinAttrFactory {
+class BlendSkinAttrFactory extends PrefixSkinAttrFactory {
+
+    public BlendSkinAttrFactory(){
+        super();
+    }
 
     @Override
     public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {

@@ -1,6 +1,7 @@
 package easy.skin.impl;
 
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -32,4 +33,10 @@ public interface ISkinDelegate {
      * @param resTypeName  资源类型 eg:drawable color
      */
     SkinView addSkinView(View view, String attrName, String resEntryName, String resTypeName);
+
+    /**
+     * 添加字体切换控件
+     * @param textView
+     */
+    void addFontChangeView(TextView textView);
 }

@@ -36,4 +36,6 @@ public class SkinConst {
      * 默认前缀
      */
     public static final String DEFAULT_PREFIX = "skin";
+
+    public static final String FONT_DIR = "fonts";
 }

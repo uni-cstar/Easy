@@ -17,6 +17,7 @@ public class SkinPrefUtil {
     private static final String KEY_PLUGIN_PATH = "key_plugin_path";
     private static final String KEY_PLUGIN_PKG = "key_plugin_pkg";
     private static final String KEY_PLUGIN_SUFFIX = "key_plugin_suffix";
+    private static final String KEY_FONT_PATH = "key_font_path";
 
     public SkinPrefUtil(Context context) {
         this.mContext = context;
@@ -51,6 +52,28 @@ public class SkinPrefUtil {
     public void putPluginSuffix(String suffix) {
         SharedPreferences sp = mContext.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
         sp.edit().putString(KEY_PLUGIN_SUFFIX, suffix).apply();
+    }
+
+    /**
+     * 保存字体路径
+     *
+     * @param context
+     * @param path
+     */
+    public static void putFontPath(Context context, String path) {
+        SharedPreferences sp = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        sp.edit().putString(KEY_FONT_PATH, path).apply();
+    }
+
+    /**
+     * 获取字体路径
+     *
+     * @param context
+     * @return
+     */
+    public static String getFontPath(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+        return sp.getString(KEY_FONT_PATH, null);
     }
 
     public boolean clear() {

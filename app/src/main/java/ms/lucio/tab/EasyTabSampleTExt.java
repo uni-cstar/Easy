@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import easy.badge.view.BadgeRelativeLayout;
 import easy.view.tab.EasyFragTabView;
 import easy.view.tab.EasyFragmentTabHost;
 import easy.view.tab.EasyTabHost;

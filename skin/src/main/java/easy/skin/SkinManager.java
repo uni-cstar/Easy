@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 
 import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +78,9 @@ public class SkinManager {
      * 是否存在皮肤切换
      */
     private boolean mIsUseSkinPlugin,mIsInit;
+
+    @FontType
+    private int mFontType = FONT_DISABLE;
 
     /**
      * 皮肤 preferences，保存一些常量
@@ -175,6 +181,50 @@ public class SkinManager {
     }
 
     /**
+     * 设置字体
+     * @param type
+     */
+    public void setFontChangeType(@FontType int type){
+        mFontType = type;
+        if(mFontType == FONT_INNER){
+            TypefaceUtils.getTypeface(mContext,mContext.getAssets());
+        }else if(mFontType == FONT_EXTERNAL){
+            TypefaceUtils.getTypeface(mContext,mResources.getAssets());
+        }else{
+            TypefaceUtils.restoreDefaultTypeface(mContext);
+        }
+    }
+
+    /**
+     * 是否切换字体
+     * @return
+     */
+    public boolean isFontChangeEnable(){
+        return mFontType == FONT_INNER || mFontType == FONT_EXTERNAL;
+    }
+
+    /**
+     * 禁用字体切换
+     */
+    static final int FONT_DISABLE = 0;
+
+    /**
+     * 程序内字体切换
+     */
+    static final int FONT_INNER = 1;
+
+    /**
+     * 皮肤包字体切换
+     */
+    static final int FONT_EXTERNAL = 2;
+
+    @IntDef({FONT_DISABLE,FONT_INNER,FONT_EXTERNAL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface FontType{
+
+    }
+
+    /**
      * 装载插件数据
      *
      * @param apkPath
@@ -249,6 +299,7 @@ public class SkinManager {
         mSkinPackageName = mContext.getPackageName();
         //重置资源管理器
         mResourceManager.update(mContext, mResources, mSkinPackageName, mSkinSuffix);
+        TypefaceUtils.restoreDefaultTypeface(mContext);
         notifySkinChangedListeners();
     }
 

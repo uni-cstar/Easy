@@ -3,6 +3,7 @@ package easy.skin.base;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -88,6 +89,12 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
         if (mSkinDelegateImpl != null)
             return mSkinDelegateImpl.addSkinView(view, attrName, resEntryName, resTypeName);
         return null;
+    }
+
+    @Override
+    public void addFontChangeView(TextView textView) {
+        if (mSkinDelegateImpl != null)
+            mSkinDelegateImpl.addFontChangeView(textView);
     }
 
 }

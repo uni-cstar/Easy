@@ -30,6 +30,11 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
-    compile project(':easy')
+//    compile project(':easy')
     compile project(':skin')
+    compile('ms.easy:easy:0.2.4-beta') {
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
 }

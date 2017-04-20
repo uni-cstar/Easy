@@ -13,6 +13,7 @@ class PrefixSkinAttrFactory extends SkinAttrFactory {
     private String mPrefix;
 
     PrefixSkinAttrFactory(String prefix) {
+        super();
         mPrefix = SkinUtil.isNullOrEmpty(prefix) ? SkinConst.DEFAULT_PREFIX : prefix;
     }
 

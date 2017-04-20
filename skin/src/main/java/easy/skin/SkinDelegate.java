@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.view.LayoutInflaterFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.TextView;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,6 +36,8 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     private AppCompatActivity mActivity;
 
     private Map<View, SkinView> mSkinViewMap = new HashMap<>();
+
+    private FontRepository mFontRepository;
 
     /**
      * 是否允许设置状态栏颜色
@@ -176,15 +180,24 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         try {
             List<SkinAttr> skinAttrs = SkinManager.getInstance().getSkinAttrFactory().getSkinAttrs(attrs, context);
+
             if (SkinUtil.isNullOrEmpty(skinAttrs)) {
-//            AppCompatDelegate delegate = mActivity.getDelegate();
-//            return delegate.tryCreateView(parent, name, context, attrs);
-                return null;
+                AppCompatDelegate delegate = mActivity.getDelegate();
+                View view = delegate.createView(parent, name, context, attrs);
+                if (view != null && view instanceof TextView) {
+                    addFontChangeView((TextView) view);
+                }
+                return view;
             } else {
                 View view = mViewProducer.createViewFromTag(context, name, attrs);
                 if (view == null) {
                     return null;
                 }
+
+                if (view instanceof TextView) {
+                    addFontChangeView((TextView) view);
+                }
+
                 injectSkinView(view, skinAttrs);
                 return view;
             }
@@ -257,6 +270,16 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, resEntryName, resTypeName);
         List<SkinAttr> skinAttrs = Collections.singletonList(skinAttr);
         return addSkinView(view, skinAttrs);
+    }
+
+    @Override
+    public void addFontChangeView(TextView textView) {
+        if (!SkinManager.getInstance().isFontChangeEnable())
+            return;
+        if (mFontRepository == null) {
+            mFontRepository = new FontRepository();
+        }
+        mFontRepository.add(textView);
     }
 
 }

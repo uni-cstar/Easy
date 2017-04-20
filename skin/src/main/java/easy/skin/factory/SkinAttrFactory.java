@@ -22,19 +22,25 @@ public abstract class SkinAttrFactory {
 
     /**
      * 前缀属性过滤工厂
+     *
      * @param prefix 前缀 ，为空时使用{@link SkinConst#DEFAULT_PREFIX}做为默认
      * @return
      */
-    public static SkinAttrFactory createPrefixFactory(@Nullable String prefix){
+    public static SkinAttrFactory createPrefixFactory(@Nullable String prefix) {
         return new PrefixSkinAttrFactory(prefix);
     }
 
     /**
      * 创建命名空间属性工厂
+     *
      * @return
      */
-    public static SkinAttrFactory createNamespaceFactory(){
+    public static SkinAttrFactory createNamespaceFactory() {
         return new NamespaceSkinAttrFactory();
+    }
+
+    public static SkinAttrFactory createBlendSkinFactory() {
+        return new BlendSkinAttrFactory();
     }
 
     public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {
@@ -56,19 +62,19 @@ public abstract class SkinAttrFactory {
                 //处理样式中的textColor
                 int textColorId = a.getResourceId(0, -1);
                 if (textColorId != -1) {//&&textColor != -1
-                    handleAttrByResId(context,"textColor",textColorId,skinAttrs);
+                    handleAttrByResId(context, "textColor", textColorId, skinAttrs);
                 }
 
                 //处理background
                 int backgroundId = a.getResourceId(1, -1);
                 if (backgroundId != -1) {//&&background != -1
-                    handleAttrByResId(context,"background",backgroundId,skinAttrs);
+                    handleAttrByResId(context, "background", backgroundId, skinAttrs);
                 }
 
                 //处理src id
                 int srcId = a.getResourceId(2, -1);
                 if (srcId != -1) {
-                    handleAttrByResId(context,"src",srcId,skinAttrs);
+                    handleAttrByResId(context, "src", srcId, skinAttrs);
                 }
                 a.recycle();
                 continue;
@@ -76,19 +82,19 @@ public abstract class SkinAttrFactory {
             //如果是支持的属性，并且属性值是引用。 eg: android:background="@drawable/launcher"
             if (SkinAttrSupport.isSupportedAttr(attrName) && attrValue.startsWith("@")) {
                 int id = Integer.parseInt(attrValue.substring(1));
-                handleAttrByResId(context,attrName,id,skinAttrs);
+                handleAttrByResId(context, attrName, id, skinAttrs);
             }
         }
         return skinAttrs;
     }
 
-    private void handleAttrByResId(Context context, String attrName, int resId, List<SkinAttr> skinAttrs){
+    private void handleAttrByResId(Context context, String attrName, int resId, List<SkinAttr> skinAttrs) {
         String entryName = context.getResources().getResourceEntryName(resId);//入口名，eg:launcher
         String typeName = context.getResources().getResourceTypeName(resId);//类型名，eg:drawable
         //是否添加引用属性
         if (addRefAttr(attrName, resId, entryName, typeName)) {
             SkinAttr skinAttr = SkinAttrSupport.genSkinAttr(attrName, entryName, typeName);
-            if(skinAttr != null)
+            if (skinAttr != null)
                 skinAttrs.add(skinAttr);
         }
     }
