@@ -201,14 +201,8 @@ public class DownloadManagerQuery {
      *
      * @param dm
      * @param downloadId
-     * @return <ul>
-     * <li>if status of downloadId is {@link DownloadManager#STATUS_PAUSED}, return one of
-     * {@link DownloadManager#PAUSED_WAITING_TO_RETRY}<br/>
-     * {@link DownloadManager#PAUSED_WAITING_FOR_NETWORK}<br/>
-     * {@link DownloadManager#PAUSED_QUEUED_FOR_WIFI}<br/>
-     * {@link DownloadManager#PAUSED_UNKNOWN}</li>
-     * <li>else return {@link DownloadManager#PAUSED_UNKNOWN}</li>
-     * </ul>
+     * @return 返回常量见：DownloadManager_PAUSED_xxxxx
+
      */
     public int getPausedReason(DownloadManager dm, long downloadId) {
         return getInt(dm, downloadId, DownloadManager.COLUMN_REASON);

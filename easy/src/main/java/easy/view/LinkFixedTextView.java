@@ -14,15 +14,15 @@ import android.widget.TextView;
 /**
  * @author Lucio
  * @version V2.0
- * @date 2015-06-08
- * @desc <p>
+ * date: 2015-06-08
+ * desc: <p>
  * 1.修正ListView的Item中TextView包含超链接时，点击TextView的非超链接区域时不响应ListView的ItemClick事件
  * 2.对外提供接口处理超链接的点击事件{@link #setOnLinkFixedTextViewListener},eg.使用内置浏览器打开超链接；
  * PS:如果整个App点击超链接的操作一致的话，可以考虑实现一个{@link LinkFixedTextView}的子类，并实现{@link OnLinkFixedTextViewListener}接口，
  * 并调用{@link #setOnLinkFixedTextViewListener(OnLinkFixedTextViewListener)}方法设置子类，这样即可实现统一处理。
  * </p>
- * @date 2016-12-27
- * @desc <P>
+ * date: 2016-12-27
+ * desc: <P>
  * 1.修正长按超链接不响应控件长按事件。
  * 2.修正控件事件与AdapterView的Item事件冲突 {@link #setAttachToAdapterView()}
  * PS:如果不调用上面方法，也可以在控件的点击长按事件中实现与AdapterView的Item的点击或长按事件达到类似效果。

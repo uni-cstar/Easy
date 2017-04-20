@@ -1,7 +1,6 @@
 package easy.view.tab;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.View;
 
 /**

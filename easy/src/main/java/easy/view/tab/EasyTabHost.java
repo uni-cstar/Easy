@@ -31,9 +31,6 @@ public class EasyTabHost extends LinearLayout {
 
     private OnEasyTabDoubleClickListener mTabDoubleClickListener;
 
-    private Paint mDividerPaint;
-    private int mDividerWidth = 1;
-
     private EasyTabWidget mTabWidget;
 
     public EasyTabHost(Context context) {
@@ -46,10 +43,6 @@ public class EasyTabHost extends LinearLayout {
 
     public EasyTabHost(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mDividerPaint = new TextPaint();
-        mDividerPaint.setAntiAlias(true);
-        mDividerPaint.setStrokeWidth(mDividerWidth);
-        mDividerPaint.setColor(context.getResources().getColor(R.color.easy_tab_host_divider));
     }
 
     /**
@@ -58,7 +51,7 @@ public class EasyTabHost extends LinearLayout {
     public void setup() {
         mCurrentTab = -1;
         mTabItems.clear();
-        if((mTabWidget = (EasyTabWidget) findViewById(R.id.easyTabs)) == null){
+        if ((mTabWidget = (EasyTabWidget) findViewById(R.id.easyTabs)) == null) {
             mTabWidget = new EasyTabWidget(getContext());
             LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             mTabWidget.setLayoutParams(lp);
@@ -74,8 +67,7 @@ public class EasyTabHost extends LinearLayout {
      * @param color
      */
     public void setDividerColor(int color) {
-        mDividerPaint.setColor(color);
-        this.postInvalidate(0, 0, this.getWidth(), mDividerWidth);
+       mTabWidget.setDividerColor(color);
     }
 
     /**
@@ -84,13 +76,12 @@ public class EasyTabHost extends LinearLayout {
      * @param px
      */
     public void setDividerStroke(int px) {
-        mDividerWidth = px;
-        mDividerPaint.setStrokeWidth(px);
-        this.postInvalidate(0, 0, this.getWidth(), mDividerWidth);
+        mTabWidget.setDividerStroke(px);
     }
 
     /**
      * 添加tab
+     *
      * @param tabItem
      */
     public void addTab(IEasyTabItem tabItem) {
@@ -116,6 +107,7 @@ public class EasyTabHost extends LinearLayout {
 
     /**
      * 获取当前tab
+     *
      * @return
      */
     public int getCurrentTab() {
@@ -124,6 +116,7 @@ public class EasyTabHost extends LinearLayout {
 
     /**
      * 设置当前tab
+     *
      * @param index
      */
     public void setCurrentTab(int index) {
@@ -141,6 +134,7 @@ public class EasyTabHost extends LinearLayout {
 
     /**
      * 设置双击回调
+     *
      * @param listener
      */
     public void setOnEasyTabDoubleClickListener(OnEasyTabDoubleClickListener listener) {
@@ -219,11 +213,4 @@ public class EasyTabHost extends LinearLayout {
         }
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        //绘制分割线
-        if (mTabWidget.getWidth() > 0)
-            canvas.drawLine(mTabWidget.getX(), mTabWidget.getY(), mTabWidget.getWidth(), mTabWidget.getY(), mDividerPaint);
-    }
 }

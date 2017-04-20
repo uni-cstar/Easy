@@ -1,11 +1,11 @@
 package easy.view.tab;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import easy.R;
 import easy.badge.HorizontalGravity;
@@ -21,8 +21,8 @@ import easy.utils.ResourceUtil;
 public class EasyTabView extends BadgeRelativeLayout {
 
     Context mContext;
-    ImageView mImageView;
-    TextView mTextView;
+    AppCompatImageView mImageView;
+    AppCompatTextView mTextView;
     int mTextSizeRes = R.dimen.size_tab_text;
     int mImageSizeRes = R.dimen.size_tab_image;
     int mMarginRes = R.dimen.size_tab_image_margin;
@@ -51,7 +51,7 @@ public class EasyTabView extends BadgeRelativeLayout {
         int imgSize = mContext.getResources().getDimensionPixelSize(mImageSizeRes);
 
         //添加ImageView
-        mImageView = new ImageView(mContext, attrs);
+        mImageView = new AppCompatImageView(mContext, attrs);
         mImageView.setId(R.id.easy_tab_id_image);
         LayoutParams imgLp = new LayoutParams(imgSize, imgSize);
         imgLp.addRule(CENTER_HORIZONTAL);
@@ -60,7 +60,7 @@ public class EasyTabView extends BadgeRelativeLayout {
         this.addView(mImageView);
 
         //添加TextView
-        mTextView = new TextView(mContext, attrs);
+        mTextView = new AppCompatTextView(mContext, attrs);
         mTextView.setId(R.id.easy_tab_id_text);
         mTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         LayoutParams tvlp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -77,11 +77,11 @@ public class EasyTabView extends BadgeRelativeLayout {
         this.getBadgeConfigHelper().setBadgeHorizontalMarginDp(ResourceUtil.px2dip(getContext(), hMargin));
     }
 
-    public ImageView getImageView() {
+    public AppCompatImageView getImageView() {
         return mImageView;
     }
 
-    public TextView getTextView() {
+    public AppCompatTextView getTextView() {
         return mTextView;
     }
 
