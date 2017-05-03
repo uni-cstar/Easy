@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import easy.skin.SkinConst;
@@ -19,6 +20,12 @@ import easy.skin.attr.SkinAttrSupport;
  */
 
 public abstract class SkinAttrFactory {
+
+    private int[] mStyleAttrs = new int[]{
+            android.R.attr.textColor,
+            android.R.attr.background,
+            android.R.attr.src
+    };
 
     /**
      * 前缀属性过滤工厂
@@ -43,6 +50,10 @@ public abstract class SkinAttrFactory {
         return new BlendSkinAttrFactory();
     }
 
+    public static SkinAttrFactory createBlendSkinFactory(@Nullable String prefix) {
+        return new BlendSkinAttrFactory(prefix);
+    }
+
     public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {
         List<SkinAttr> skinAttrs = new ArrayList<>();
         for (int i = 0; i < attrs.getAttributeCount(); i++) {//遍历属性
@@ -53,11 +64,7 @@ public abstract class SkinAttrFactory {
             if ("style".equals(attrName)) {//style 属性 eg:style="@style/textStyle"
                 String styleName = attrValue.substring(attrValue.indexOf("/") + 1);//eg: textStyle
                 int styleID = context.getResources().getIdentifier(styleName, "style", context.getPackageName());
-                int[] styleAttrs = new int[]{
-                        android.R.attr.textColor,
-                        android.R.attr.background,
-                        android.R.attr.src};
-                TypedArray a = context.getTheme().obtainStyledAttributes(styleID, styleAttrs);
+                TypedArray a = context.getTheme().obtainStyledAttributes(styleID, mStyleAttrs);
 
                 //处理样式中的textColor
                 int textColorId = a.getResourceId(0, -1);

@@ -19,6 +19,10 @@ class BlendSkinAttrFactory extends PrefixSkinAttrFactory {
         super();
     }
 
+    public BlendSkinAttrFactory(String prefix){
+        super(prefix);
+    }
+
     @Override
     public List<SkinAttr> getSkinAttrs(AttributeSet attrs, Context context) {
         //是否配备了

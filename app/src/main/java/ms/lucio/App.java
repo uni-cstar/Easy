@@ -10,6 +10,8 @@ import java.io.OutputStream;
 
 import easy.skin.SkinConst;
 import easy.skin.SkinManager;
+import easy.skin.attr.BackgroundTintAttr;
+import easy.skin.attr.ImageViewSrcTintAttr;
 import easy.skin.attr.SkinAttrSupport;
 import easy.skin.attr.TextAttr;
 import easy.skin.base.BaseSkinApplication;
@@ -20,12 +22,15 @@ import easy.skin.factory.SkinAttrFactory;
  */
 
 public class App extends BaseSkinApplication{
+
     @Override
     public void onCreate() {
         super.onCreate();
         SkinAttrSupport.addSupportAttr(SkinConst.ATTR_NAME_TEXT,new TextAttr());
-        SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
+        SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createBlendSkinFactory("skin"));
         SkinManager.getInstance().setEnableFontChange(true);
+        BackgroundTintAttr.addToSupportAttr();
+        ImageViewSrcTintAttr.addToSupportAttr();
 //        SkinManager.getInstance().setSkinAttrFactory(SkinAttrFactory.createPrefixFactory(null));
         try {
             copyBigDataToSD();

@@ -2,22 +2,44 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:skin="http://schemas.android.com/android/skin"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_skin_sample"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ms.lucio.skin.SkinSampleActivity">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imgTint"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/home_ux_seletor"
+                app:backgroundTint="@color/skin_tint_color"
+                skin:enable="true"/>
+
+            <ImageView
+                android:id="@+id/imgTint2"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@color/black"
+                android:tint="@color/skin_tint_color"
+                skin:enable="true"/>
+        </LinearLayout>
+
         <EditText
             android:id="@+id/edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="支持输入red／blue" />
+            android:hint="支持输入red／blue"
+            />
 
         <Button
             android:id="@+id/btn1"
@@ -43,10 +65,11 @@
             android:text="加载sdk 下ucux-ls.skin文件" />
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:src="@drawable/skin_femal" />
+            android:src="@drawable/ic_tint" />
 
         <ImageView
             android:layout_width="match_parent"
