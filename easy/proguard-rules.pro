@@ -118,7 +118,7 @@
 #}
 ## 不混淆所有类及其类成员中的使用注解的初始化方法
 #-keepclasseswithmembers class * {
-#    @android.support.annotation.Keep <init>(...);
+#    @android.support.annotation.Keep <setup>(...);
 #}
 
 

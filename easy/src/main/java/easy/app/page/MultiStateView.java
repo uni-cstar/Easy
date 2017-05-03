@@ -192,7 +192,7 @@ public class MultiStateView extends FrameLayout {
     /**
      * 缺省的View状态
      */
-    @IntDef({PageViewType.NONE, PageViewType.CONTENT, PageViewType.LOADING, PageViewType.EMPTY, PageViewType.ERROR})
+    @IntDef({PageViewType.NONE, PageViewType.CONTENT, PageViewType.LOADING, PageViewType.EMPTY, PageViewType.ERROR,PageViewType.NO_RESULT})
     @Retention(RetentionPolicy.SOURCE)
     public @interface PageViewType {
         /**
@@ -215,6 +215,11 @@ public class MultiStateView extends FrameLayout {
          * 错误视图
          */
         int ERROR = 3;
+
+        /**
+         * 没有结果
+         */
+        int NO_RESULT = 4;
     }
 
     /**
