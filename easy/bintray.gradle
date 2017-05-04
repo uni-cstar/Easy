@@ -1,7 +1,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def proj_version = '0.3.1-beta'
+def proj_version = '0.3.2-beta'
 def proj_artifact_id = 'easy'
 def proj_group='ms.easy'
 def proj_pom_name = 'Easy for Android'
