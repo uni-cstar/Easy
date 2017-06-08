@@ -15,4 +15,5 @@
     <string name="skin_clear_red">清除皮肤_red</string>
     <string name="skin_clear_blue">清除皮肤_blue</string>
 
+    <integer name="sdf">1</integer>
 </resources>

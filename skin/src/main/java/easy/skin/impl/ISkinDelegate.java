@@ -19,6 +19,13 @@ public interface ISkinDelegate {
     void removeSkinView(View view);
 
     /**
+     * 应用对应view的换肤属性
+     * 用于手动调用触发属性
+     * @param target
+     */
+    void tryApplySkinView(View target);
+
+    /**
      * 添加换肤View
      * @param view
      * @param skinAttrs 换肤属性
@@ -41,4 +48,6 @@ public interface ISkinDelegate {
     void addFontChangeView(TextView textView);
 
     void removeFontChangeView(TextView textView);
+
+
 }

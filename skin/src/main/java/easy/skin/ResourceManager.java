@@ -60,7 +60,7 @@ public class ResourceManager {
     private int getColor2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
-            if(resId == 0)
+            if (resId == 0)
                 return 0;
 
             int color = 0;
@@ -74,11 +74,117 @@ public class ResourceManager {
                 return ContextCompat.getColor(mContext, resId);
             }
             return color;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+
+    public int getInteger(String resName) {
+        String suffixName = appendSuffix(resName);
+        int color = getInteger2(suffixName);
+        if (color == 0) {
+            return getInteger2(resName);
+        }
+        return color;
+    }
+
+    private int getInteger2(String resName) {
+        try {
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_INTEGER, mPluginPackageName);
+            if (resId == 0)
+                return 0;
+
+            int color = mResources.getInteger(resId);
+            if (color == 0) {
+                return mContext.getResources().getInteger(resId);
+            }
+            return color;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public float getDimension(String resName) {
+        String suffixName = appendSuffix(resName);
+        float dimen = getDimension2(suffixName);
+        if (dimen == 0) {
+            return getDimension2(resName);
+        }
+        return dimen;
+    }
+
+    private float getDimension2(String resName) {
+        try {
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mPluginPackageName);
+            if (resId == 0)
+                return 0;
+
+            float dimen = mResources.getDimension(resId);
+            if (dimen == 0) {
+                return mContext.getResources().getDimension(resId);
+            }
+            return dimen;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public float getDimensionPixelOffset(String resName) {
+        String suffixName = appendSuffix(resName);
+        float dimen = getDimensionPixelOffset2(suffixName);
+        if (dimen == 0) {
+            return getDimensionPixelOffset2(resName);
+        }
+        return dimen;
+    }
+
+    private float getDimensionPixelOffset2(String resName) {
+        try {
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mPluginPackageName);
+            if (resId == 0)
+                return 0;
+
+            float dimen = mResources.getDimensionPixelOffset(resId);
+            if (dimen == 0) {
+                return mContext.getResources().getDimensionPixelOffset(resId);
+            }
+            return dimen;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+    public float getDimensionPixelSize(String resName) {
+        String suffixName = appendSuffix(resName);
+        float dimen = getDimensionPixelSize2(suffixName);
+        if (dimen == 0) {
+            return getDimensionPixelSize2(resName);
+        }
+        return dimen;
+    }
+
+    private float getDimensionPixelSize2(String resName) {
+        try {
+            int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mPluginPackageName);
+            if (resId == 0)
+                return 0;
+
+            float dimen = mResources.getDimensionPixelSize(resId);
+            if (dimen == 0) {
+                return mContext.getResources().getDimensionPixelSize(resId);
+            }
+            return dimen;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 
     /**
      * 获取ColorStateList
@@ -99,7 +205,7 @@ public class ResourceManager {
     private ColorStateList getColorStateList2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
-            if(resId == 0)
+            if (resId == 0)
                 return null;
             ColorStateList result = null;
             if (Build.VERSION.SDK_INT >= 23) {
@@ -142,7 +248,7 @@ public class ResourceManager {
                 resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
             }
 
-            if(resId == 0)
+            if (resId == 0)
                 return null;
 
             Drawable result = null;
@@ -152,17 +258,17 @@ public class ResourceManager {
                 result = mResources.getDrawable(resId);
             }
 
-            if(result == null){
-                result = ContextCompat.getDrawable(mContext,resId);
+            if (result == null) {
+                result = ContextCompat.getDrawable(mContext, resId);
             }
             return result;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public CharSequence getText(String resName){
+    public CharSequence getText(String resName) {
         String suffixName = appendSuffix(resName);
         CharSequence text = getText2(suffixName);
         if (text == null) {
@@ -171,19 +277,19 @@ public class ResourceManager {
         return text;
     }
 
-    private CharSequence getText2(String resName){
+    private CharSequence getText2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_STRING, mPluginPackageName);
-            if(resId == 0)
+            if (resId == 0)
                 return null;
 
             try {
                 return mResources.getText(resId);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
                 return mContext.getResources().getText(resId);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }

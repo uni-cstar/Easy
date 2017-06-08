@@ -15,4 +15,13 @@ public interface ISkinActivityDelegate extends ISkinDelegate {
 
     void setIsSkinSwitchAnimAlways(boolean isSkinSwitchAnimAlways);
 
+    void setOnSkinChangedListener(SkinChangedListener skinChangeListener);
+
+    /**
+     * 设置字体切换监听
+     *
+     * @param fontChangedListener
+     */
+    void setOnSkinFontChangedListener(SkinFontChangedListener fontChangedListener);
+
 }

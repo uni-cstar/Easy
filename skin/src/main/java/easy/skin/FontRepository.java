@@ -3,7 +3,9 @@ package easy.skin;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import easy.skin.util.SkinUtil;
@@ -14,7 +16,7 @@ import easy.skin.util.SkinUtil;
 
 public class FontRepository {
 
-    private List<TextView> mTextViews;
+    private List<SoftReference<TextView>> mTextViews;
 
     public FontRepository() {
 
@@ -24,7 +26,8 @@ public class FontRepository {
         if (mTextViews == null) {
             mTextViews = new ArrayList<>();
         }
-        mTextViews.add(textView);
+
+        mTextViews.add(new SoftReference<TextView>(textView));
         textView.setTypeface(TypefaceUtils.getCurrentTypeface());
     }
 
@@ -33,15 +36,34 @@ public class FontRepository {
     }
 
     public void remove(TextView textView) {
-        mTextViews.remove(textView);
+        Iterator<SoftReference<TextView>> iterator = mTextViews.iterator();
+        while (iterator.hasNext()){
+            SoftReference<TextView> viewRef = iterator.next();
+            TextView view = viewRef.get();
+            if(view == null || view == textView){
+                iterator.remove();
+            }
+        }
+
     }
 
     public void applyFont(Typeface tf) {
 
         if (SkinUtil.isNullOrEmpty(mTextViews))
             return;
-        for (TextView textView : mTextViews) {
-            textView.setTypeface(tf);
+
+        Iterator<SoftReference<TextView>> iterator = mTextViews.iterator();
+        while (iterator.hasNext()){
+            SoftReference<TextView> viewRef = iterator.next();
+            TextView view = viewRef.get();
+            if(view == null){
+                iterator.remove();
+            }else{
+                view.setTypeface(tf);
+            }
         }
+//        for (TextView textView : mTextViews) {
+//            textView.setTypeface(tf);
+//        }
     }
 }

@@ -96,6 +96,10 @@ public abstract class SkinAttrFactory {
     }
 
     private void handleAttrByResId(Context context, String attrName, int resId, List<SkinAttr> skinAttrs) {
+        //如果id == 0则是@null资源
+        if(resId == 0){
+            return;
+        }
         String entryName = context.getResources().getResourceEntryName(resId);//入口名，eg:launcher
         String typeName = context.getResources().getResourceTypeName(resId);//类型名，eg:drawable
         //是否添加引用属性

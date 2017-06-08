@@ -24,8 +24,10 @@ public class SkinCompatDef implements SkinCompatImpl {
     @Override
     public AssetManager createAssetManager(String apkPath) throws Exception {
         AssetManager assetManager = AssetManager.class.newInstance();
+
         Method addAssetPath = assetManager.getClass().getMethod("addAssetPath", String.class);
         addAssetPath.invoke(assetManager, apkPath);
+
         return assetManager;
     }
 

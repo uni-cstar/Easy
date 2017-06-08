@@ -83,6 +83,13 @@ public class SkinManager {
 
     private boolean mEnableFontChange = false;
 
+    /**
+     * 是否在创建换肤View时执行对应的换肤属性
+     * 用于解决某些属性在没有使用换肤时的兼容问题
+     * 比如drawableTint 是api 23才支持的属性
+     */
+    private boolean mIsApplySkinAttrWhenCreateSkinView;
+
 
     /**
      * 皮肤 preferences，保存一些常量
@@ -232,6 +239,7 @@ public class SkinManager {
 
     /**
      * 获取当前字体
+     *
      * @return
      */
     public Typeface getCurrentTypeface() {
@@ -326,6 +334,14 @@ public class SkinManager {
      */
     public boolean isUseSkin() {
         return mIsUseSkinPlugin || !SkinUtil.isNullOrEmpty(mSkinSuffix);
+    }
+
+    public boolean isApplySkinAttrWhenCreateSkinView() {
+        return mIsApplySkinAttrWhenCreateSkinView;
+    }
+
+    public void setApplySkinAttrWhenCreateSkinView(boolean value) {
+        mIsApplySkinAttrWhenCreateSkinView = value;
     }
 
     /**
@@ -520,5 +536,9 @@ public class SkinManager {
         for (SkinFontChangedListener listener : mSkinFontChangedListeners) {
             listener.onSkinFontChanged();
         }
+    }
+
+    public Resources getSkinResources() {
+        return mResources;
     }
 }

@@ -19,20 +19,19 @@ import easy.skin.SkinManager;
  */
 public class BackgroundTintAttr extends SkinAttr {
 
-    private static final String ATTR_NAME = "backgroundTint";
+    public static final String ATTR_NAME = "backgroundTint";
 
     @Override
     public boolean apply(View view) {
-        //如果控件不支持bg tint 则直接返回false
-        if (!(view instanceof TintableBackgroundView))
-            return false;
 
         ColorStateList color = SkinManager.getInstance().getResourceManager().getColorStateList(resEntryName);
         if (color == null && SkinAttrSupport.isIgnoreWhenAttrNotFound())
             return false;
-
-        ViewCompat.setBackgroundTintList(view, color);
-
+        if (view instanceof TintableBackgroundView) {
+            ((TintableBackgroundView) view).setSupportBackgroundTintList(color);
+        } else {
+            ViewCompat.setBackgroundTintList(view, color);
+        }
         return true;
     }
 
@@ -44,6 +43,6 @@ public class BackgroundTintAttr extends SkinAttr {
      * 添加到支持的属性中
      */
     public static void addToSupportAttr() {
-        SkinAttrSupport.addSupportAttr(ATTR_NAME,newInstance());
+        SkinAttrSupport.addSupportAttr(ATTR_NAME, newInstance());
     }
 }

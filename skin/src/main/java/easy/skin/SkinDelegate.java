@@ -15,8 +15,10 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
+import java.lang.ref.SoftReference;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -31,12 +33,13 @@ import easy.skin.util.SkinUtil;
  * Created by Lucio on 17/3/30.
  * Skin 委托管理,可以用在Activity管理界面皮肤切换。
  */
-public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener, SkinFontChangedListener,ISkinActivityDelegate {
+public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener, SkinFontChangedListener, ISkinActivityDelegate {
 
 
     private AppCompatActivity mActivity;
 
-    private Map<View, SkinView> mSkinViewMap = new HashMap<>();
+    private Map<SoftReference<View> , SkinView> mSkinViewMap = new HashMap<>();
+
 
     private FontRepository mFontRepository;
 
@@ -58,6 +61,9 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     private boolean mIsSkinSwitchAnimAlways;
 
     private ViewProducer mViewProducer;
+
+    private SkinChangedListener mSkinChangedListener;
+    private SkinFontChangedListener mFontChangedListener;
 
     private SkinDelegate(AppCompatActivity context) {
         this(context, false);
@@ -110,6 +116,26 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     }
 
     /**
+     * 设置皮肤切换监听
+     *
+     * @param skinChangeListener
+     */
+    @Override
+    public void setOnSkinChangedListener(SkinChangedListener skinChangeListener) {
+        mSkinChangedListener = skinChangeListener;
+    }
+
+    /**
+     * 设置字体切换监听
+     *
+     * @param fontChangedListener
+     */
+    @Override
+    public void setOnSkinFontChangedListener(SkinFontChangedListener fontChangedListener) {
+        mFontChangedListener = fontChangedListener;
+    }
+
+    /**
      * 设置是否启用主题切换的动画
      * 默认开启
      *
@@ -147,15 +173,19 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
     public void onSkinChanged() {
         applySkin();
         changeStatusColor();
+        if (mSkinChangedListener != null)
+            mSkinChangedListener.onSkinChanged();
     }
 
     @Override
     public void onSkinFontChanged() {
         applyFont();
+        if (mFontChangedListener != null)
+            mFontChangedListener.onSkinFontChanged();
     }
 
     private void applyFont() {
-        if(mFontRepository == null)
+        if (mFontRepository == null)
             return;
         mFontRepository.applyFont(SkinManager.getInstance().getCurrentTypeface());
     }
@@ -172,8 +202,14 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
             animation = new AlphaAnimation(0.5f, 1.0f);
             animation.setDuration(500);
         }
-        for (View view : mSkinViewMap.keySet()) {
+
+        Iterator<SoftReference<View>> iterator = mSkinViewMap.keySet().iterator();
+        while (iterator.hasNext()){
+            SoftReference<View> viewRef = iterator.next();
+            View view = viewRef.get();
             if (view == null) {
+                mSkinViewMap.remove(viewRef);
+                iterator.remove();
                 continue;
             }
 
@@ -181,13 +217,31 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
                 if (animation != null)
                     view.startAnimation(animation);
             }
-            boolean changed = mSkinViewMap.get(view).apply();
+            boolean changed = mSkinViewMap.get(viewRef).apply();
 
             //根据属性是否改变来确定是否展示动画
             if (!mIsSkinSwitchAnimAlways && changed && animation != null) {
                 view.startAnimation(animation);
             }
         }
+
+//        for (SoftReference<View> viewRef : mSkinViewMap.keySet()) {
+//            View view = viewRef.get();
+//            if (view == null) {
+//                continue;
+//            }
+//
+//            if (mIsSkinSwitchAnimAlways) {
+//                if (animation != null)
+//                    view.startAnimation(animation);
+//            }
+//            boolean changed = mSkinViewMap.get(viewRef).apply();
+//
+//            //根据属性是否改变来确定是否展示动画
+//            if (!mIsSkinSwitchAnimAlways && changed && animation != null) {
+//                view.startAnimation(animation);
+//            }
+//        }
     }
 
     @Override
@@ -231,8 +285,8 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         if (SkinUtil.isNullOrEmpty(skinAttrs))
             return null;
         SkinView skinView = new SkinView(view, skinAttrs);
-        mSkinViewMap.put(view, skinView);
-        if (SkinManager.getInstance().isUseSkin()) {
+        mSkinViewMap.put(new SoftReference<View>(view), skinView);
+        if (SkinManager.getInstance().isApplySkinAttrWhenCreateSkinView() || SkinManager.getInstance().isUseSkin()) {
             skinView.apply();
         }
         return skinView;
@@ -273,6 +327,24 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         }
     }
 
+    @Override
+    public void tryApplySkinView(View target) {
+        Iterator<SoftReference<View>> iterator = mSkinViewMap.keySet().iterator();
+        while (iterator.hasNext()){
+            SoftReference<View> viewRef = iterator.next();
+            View view = viewRef.get();
+            if (view == null) {
+                mSkinViewMap.remove(viewRef);
+                iterator.remove();
+                continue;
+            }
+
+            if(view == target){
+                mSkinViewMap.get(viewRef).apply();
+            }
+        }
+    }
+
     /**
      * 添加换肤View
      *
@@ -308,7 +380,6 @@ public class SkinDelegate implements LayoutInflaterFactory, SkinChangedListener,
         }
         mFontRepository.remove(textView);
     }
-
 
 
 }

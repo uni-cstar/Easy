@@ -48,6 +48,21 @@
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
+  ## beta v1.1.4-beta
+     * 新增在解析布局文件时，如果ui符合换肤规则，在创建view的时候主动执行应用换肤属性，以解决某些兼容属性不生效问题（例如drawableTint）的方法
+     调用SkinManager#setApplySkinAttrWhenCreateSkinView(boolean value)使设置生效
+     修改view的引用为软引用
+
+     * fix @null 资源的处理问题
+     * 解决tint属性换肤的兼容性问题
+
+
+  ## Release v1.0.5
+     * 新增DrawableTint属性支持
+        如需应用此属性，请调用`DrawableTintAttr.addToSupportAttr()`方法
+     * BaseSkinActivity 默认增加皮肤和字体切换的回调方法实现，如果需要实现自己的处理，则可以重写对应回调方法
+        具体重写BaseSkinActivity的`onSkinChanged()`和`onSkinFontChanged()`方法。
+
   ## Release v1.0.4
      * 新增字体切换支持
        提供程序内以及皮肤包中字体切换，要求是字体文件路径必须为assets/fonts/{xxx.ttf}

@@ -78,6 +78,12 @@ public class BaseSkinFragment extends Fragment implements ISkinDelegate {
     }
 
     @Override
+    public void tryApplySkinView(View target) {
+        if (mSkinDelegateImpl != null)
+            mSkinDelegateImpl.tryApplySkinView(target);
+    }
+
+    @Override
     public SkinView addSkinView(View view, List<SkinAttr> skinAttrs) {
         if (mSkinDelegateImpl != null)
             return mSkinDelegateImpl.addSkinView(view, skinAttrs);

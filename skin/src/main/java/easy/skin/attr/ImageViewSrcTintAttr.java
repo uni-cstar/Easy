@@ -15,7 +15,7 @@ import easy.skin.SkinManager;
 
 public class ImageViewSrcTintAttr extends SkinAttr {
 
-    private static final String ATTR_NAME = "tint";
+    public static final String ATTR_NAME = "tint";
 
     @Override
     public boolean apply(View view) {
@@ -40,9 +40,16 @@ public class ImageViewSrcTintAttr extends SkinAttr {
         Drawable drawable = view.getDrawable();
         if (drawable == null)
             return false;
-        Drawable wrapDrawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTintList(wrapDrawable, color);
-        view.setImageDrawable(wrapDrawable);
+
+//        Drawable wrapDrawable = DrawableCompat.wrap(drawable);//drawable.mutate();
+//        wrapDrawable.setBounds(drawable.copyBounds());
+//        DrawableCompat.setTintList(wrapDrawable, color);
+//        view.setImageDrawable(wrapDrawable);
+
+        Drawable d1 = drawable.mutate();
+        d1.setBounds(drawable.copyBounds());
+        DrawableCompat.setTintList(d1, color);
+        view.setImageDrawable(d1);
         return true;
     }
 
