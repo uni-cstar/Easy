@@ -3,7 +3,11 @@ package easy.skin.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.AnyRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -13,6 +17,48 @@ import easy.skin.SkinManager;
  * Created by Lucio on 17/3/30.
  */
 public class SkinUtil {
+
+    public static Drawable tintDrawable(Drawable drawable, ColorStateList color) {
+        if (drawable == null)
+            return null;
+
+        Drawable d1 = drawable.mutate();
+        d1 = DrawableCompat.wrap(d1);
+        DrawableCompat.setTintList(d1, color);
+        if (d1.isStateful()) {
+            d1.setState(drawable.getState());
+        }
+        return d1;
+    }
+
+    /**
+     * 渲染drawable
+     *
+     * @param view
+     * @param color
+     * @return
+     */
+    public static Drawable tintDrawable(ImageView view, ColorStateList color) {
+        Drawable drawable = view.getDrawable();
+        if (drawable == null)
+            return null;
+
+        Drawable d1 = drawable.mutate();
+        d1 = DrawableCompat.wrap(d1);
+        DrawableCompat.setTintList(d1, color);
+        if (d1.isStateful()) {
+            d1.setState(view.getDrawableState());
+        }
+        return d1;
+    }
+
+    public static boolean setTintList(ImageView view, ColorStateList color) {
+        Drawable drawable = tintDrawable(view, color);
+        if (drawable == null)
+            return false;
+        view.setImageDrawable(drawable);
+        return true;
+    }
 
     /**
      * 根据apk路径获取apk的包名

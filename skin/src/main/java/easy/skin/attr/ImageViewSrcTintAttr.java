@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import easy.skin.SkinManager;
+import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/5/3.
@@ -37,20 +38,7 @@ public class ImageViewSrcTintAttr extends SkinAttr {
      * @return
      */
     public boolean setTintList(ImageView view, ColorStateList color) {
-        Drawable drawable = view.getDrawable();
-        if (drawable == null)
-            return false;
-
-//        Drawable wrapDrawable = DrawableCompat.wrap(drawable);//drawable.mutate();
-//        wrapDrawable.setBounds(drawable.copyBounds());
-//        DrawableCompat.setTintList(wrapDrawable, color);
-//        view.setImageDrawable(wrapDrawable);
-
-        Drawable d1 = drawable.mutate();
-        d1.setBounds(drawable.copyBounds());
-        DrawableCompat.setTintList(d1, color);
-        view.setImageDrawable(d1);
-        return true;
+        return SkinUtil.setTintList(view,color);
     }
 
 

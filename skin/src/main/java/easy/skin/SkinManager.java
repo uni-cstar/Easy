@@ -22,7 +22,7 @@ import easy.skin.impl.SkinChangedListener;
 import easy.skin.impl.SkinCompatImpl;
 import easy.skin.impl.SkinFontChangedListener;
 import easy.skin.impl.SkinLoadListener;
-import easy.skin.util.SkinPrefUtil;
+//import easy.skin.util.SkinPrefUtil;
 import easy.skin.util.SkinUtil;
 
 /**
@@ -90,11 +90,11 @@ public class SkinManager {
      */
     private boolean mIsApplySkinAttrWhenCreateSkinView;
 
-
-    /**
-     * 皮肤 preferences，保存一些常量
-     */
-    SkinPrefUtil mPrefUtils;
+//
+//    /**
+//     * 皮肤 preferences，保存一些常量
+//     */
+//    SkinPrefUtil mPrefUtils;
 
     /**
      * 回调
@@ -105,8 +105,6 @@ public class SkinManager {
 
     private SkinManager() {
         mSkinCompat = new SkinCompatDef();
-//        mSkinAttrFactory = PrefixSkinAttrFactory.create("skin");
-//        mSkinAttrFactory = NamespaceSkinAttrFactory.create();
     }
 
     //singleton
@@ -175,23 +173,24 @@ public class SkinManager {
         mSkinAttrFactory = SkinAttrFactory.createNamespaceFactory();
         //默认资源管理器
         mResourceManager = new ResourceManager(mContext, mContext.getResources(), mContext.getPackageName(), "");
-        mPrefUtils = new SkinPrefUtil(mContext);
         //设置初始化标记
         mIsInit = true;
-        String skinPluginPath = mPrefUtils.getPluginPath();
-        if (SkinUtil.isNullOrEmpty(skinPluginPath))
-            return;
-        String skinPluginPkg = mPrefUtils.getPluginPkgName();
-        String suffix = mPrefUtils.getSuffix();
 
-        File file = new File(skinPluginPath);
-        if (!file.exists()) return;
-        try {
-            loadSkinPlugin(skinPluginPath, skinPluginPkg, suffix);
-        } catch (Exception e) {
-            mPrefUtils.clear();
-            e.printStackTrace();
-        }
+//        mPrefUtils = new SkinPrefUtil(mContext);
+//        String skinPluginPath = mPrefUtils.getPluginPath();
+//        if (SkinUtil.isNullOrEmpty(skinPluginPath))
+//            return;
+//        String skinPluginPkg = mPrefUtils.getPluginPkgName();
+//        String suffix = mPrefUtils.getSuffix();
+//
+//        File file = new File(skinPluginPath);
+//        if (!file.exists()) return;
+//        try {
+//            loadSkinPlugin(skinPluginPath, skinPluginPkg, suffix);
+//        } catch (Exception e) {
+//            mPrefUtils.clear();
+//            e.printStackTrace();
+//        }
     }
 
     /**
@@ -310,9 +309,9 @@ public class SkinManager {
         mSkinPackageName = pkgName;
         mSkinSuffix = suffix;
         mIsUseSkinPlugin = true;
-        mPrefUtils.putPluginPath(mSkinPath);
-        mPrefUtils.putPluginPkgName(mSkinPackageName);
-        mPrefUtils.putPluginSuffix(mSkinSuffix);
+//        mPrefUtils.putPluginPath(mSkinPath);
+//        mPrefUtils.putPluginPkgName(mSkinPackageName);
+//        mPrefUtils.putPluginSuffix(mSkinSuffix);
     }
 
     /**
@@ -323,7 +322,7 @@ public class SkinManager {
         mSkinPackageName = null;
         mSkinSuffix = null;
         mIsUseSkinPlugin = false;
-        mPrefUtils.clear();
+//        mPrefUtils.clear();
     }
 
     /**
@@ -366,7 +365,7 @@ public class SkinManager {
         checkInit();
         mSkinSuffix = suffix;
         mResourceManager.setSuffix(mSkinSuffix);
-        mPrefUtils.putPluginSuffix(mSkinSuffix);
+//        mPrefUtils.putPluginSuffix(mSkinSuffix);
         notifySkinChangedListeners();
     }
 

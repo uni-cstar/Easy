@@ -45,5 +45,5 @@ public class SkinConst {
      */
     public static final String DEFAULT_PREFIX = "skin";
 
-    public static final String FONT_DIR = "fonts";
+//    public static final String FONT_DIR = "fonts";
 }

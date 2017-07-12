@@ -5,7 +5,14 @@ import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DimenRes;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntegerRes;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 
 import easy.skin.util.SkinUtil;
 
@@ -43,6 +50,17 @@ public class ResourceManager {
     }
 
     /**
+     * 通过id找去换肤资源颜色
+     *
+     * @param id
+     * @return
+     */
+    public int getColor(@ColorRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getColor(entryName);
+    }
+
+    /**
      * 获取颜色
      *
      * @param resName
@@ -51,7 +69,7 @@ public class ResourceManager {
     public int getColor(String resName) {
         String suffixName = appendSuffix(resName);
         int color = getColor2(suffixName);
-        if (color == 0) {
+        if (color == 0 && !resName.equals(suffixName)) {
             return getColor2(resName);
         }
         return color;
@@ -60,30 +78,34 @@ public class ResourceManager {
     private int getColor2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
-            if (resId == 0)
-                return 0;
-
-            int color = 0;
-            if (Build.VERSION.SDK_INT >= 23) {
-                color = mResources.getColor(resId, null);
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mContext.getPackageName());
+                if (resId != 0) {
+                    return ContextCompat.getColor(mContext, resId);
+                }
             } else {
-                color = mResources.getColor(resId);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    return mResources.getColor(resId, null);
+                } else {
+                    return mResources.getColor(resId);
+                }
             }
-
-            if (color == 0) {
-                return ContextCompat.getColor(mContext, resId);
-            }
-            return color;
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
 
+    public int getInteger(@IntegerRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getInteger(entryName);
+    }
+
     public int getInteger(String resName) {
         String suffixName = appendSuffix(resName);
         int color = getInteger2(suffixName);
-        if (color == 0) {
+        if (color == 0 && !resName.equals(suffixName)) {
             return getInteger2(resName);
         }
         return color;
@@ -92,24 +114,30 @@ public class ResourceManager {
     private int getInteger2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_INTEGER, mPluginPackageName);
-            if (resId == 0)
-                return 0;
-
-            int color = mResources.getInteger(resId);
-            if (color == 0) {
-                return mContext.getResources().getInteger(resId);
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_INTEGER, mContext.getPackageName());
+                if (resId != 0) {
+                    return mContext.getResources().getInteger(resId);
+                }
+            } else {
+                return mResources.getInteger(resId);
             }
-            return color;
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
 
+    public float getDimension(@DimenRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getDimension(entryName);
+    }
+
     public float getDimension(String resName) {
         String suffixName = appendSuffix(resName);
         float dimen = getDimension2(suffixName);
-        if (dimen == 0) {
+        if (dimen == 0 && !resName.equals(suffixName)) {
             return getDimension2(resName);
         }
         return dimen;
@@ -118,24 +146,30 @@ public class ResourceManager {
     private float getDimension2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mPluginPackageName);
-            if (resId == 0)
-                return 0;
-
-            float dimen = mResources.getDimension(resId);
-            if (dimen == 0) {
-                return mContext.getResources().getDimension(resId);
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mContext.getPackageName());
+                if (resId != 0) {
+                    return mContext.getResources().getDimension(resId);
+                }
+            } else {
+                return mResources.getDimension(resId);
             }
-            return dimen;
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
 
+    public float getDimensionPixelOffset(@DimenRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getDimensionPixelOffset(entryName);
+    }
+
     public float getDimensionPixelOffset(String resName) {
         String suffixName = appendSuffix(resName);
         float dimen = getDimensionPixelOffset2(suffixName);
-        if (dimen == 0) {
+        if (dimen == 0 && !resName.equals(suffixName)) {
             return getDimensionPixelOffset2(resName);
         }
         return dimen;
@@ -144,25 +178,29 @@ public class ResourceManager {
     private float getDimensionPixelOffset2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mPluginPackageName);
-            if (resId == 0)
-                return 0;
-
-            float dimen = mResources.getDimensionPixelOffset(resId);
-            if (dimen == 0) {
-                return mContext.getResources().getDimensionPixelOffset(resId);
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mContext.getPackageName());
+                if (resId != 0)
+                    return mContext.getResources().getDimensionPixelOffset(resId);
+            } else {
+                return mResources.getDimensionPixelOffset(resId);
             }
-            return dimen;
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
 
+    public float getDimensionPixelSize(@DimenRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getDimensionPixelSize(entryName);
+    }
 
     public float getDimensionPixelSize(String resName) {
         String suffixName = appendSuffix(resName);
         float dimen = getDimensionPixelSize2(suffixName);
-        if (dimen == 0) {
+        if (dimen == 0 && !resName.equals(suffixName)) {
             return getDimensionPixelSize2(resName);
         }
         return dimen;
@@ -171,20 +209,25 @@ public class ResourceManager {
     private float getDimensionPixelSize2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mPluginPackageName);
-            if (resId == 0)
-                return 0;
-
-            float dimen = mResources.getDimensionPixelSize(resId);
-            if (dimen == 0) {
-                return mContext.getResources().getDimensionPixelSize(resId);
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_DIMEN, mContext.getPackageName());
+                if (resId != 0) {
+                    return mContext.getResources().getDimensionPixelSize(resId);
+                }
+            } else {
+                return mResources.getDimensionPixelSize(resId);
             }
-            return dimen;
+            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
 
+    public ColorStateList getColorStateList(@ColorRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getColorStateList(entryName);
+    }
 
     /**
      * 获取ColorStateList
@@ -195,7 +238,7 @@ public class ResourceManager {
     public ColorStateList getColorStateList(String resName) {
         String suffixName = appendSuffix(resName);
         ColorStateList result = getColorStateList2(suffixName);
-        if (result == null) {
+        if (result == null && !resName.equals(suffixName)) {
             return getColorStateList2(resName);
         }
         return result;
@@ -205,22 +248,28 @@ public class ResourceManager {
     private ColorStateList getColorStateList2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
-            if (resId == 0)
-                return null;
-            ColorStateList result = null;
-            if (Build.VERSION.SDK_INT >= 23) {
-                result = mResources.getColorStateList(resId, null);
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mContext.getPackageName());
+                if (resId != 0) {
+                    return ContextCompat.getColorStateList(mContext, resId);
+                }
             } else {
-                result = mResources.getColorStateList(resId);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    return mResources.getColorStateList(resId, null);
+                } else {
+                    return mResources.getColorStateList(resId);
+                }
             }
-            if (result == null) {
-                result = ContextCompat.getColorStateList(mContext, resId);
-            }
-            return result;
+            return null;
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Drawable getDrawable(@DrawableRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getDrawable(entryName);
     }
 
     /**
@@ -232,7 +281,7 @@ public class ResourceManager {
     public Drawable getDrawable(String resName) {
         String suffixName = appendSuffix(resName);
         Drawable drawable = getDrawable2(suffixName);
-        if (drawable == null) {
+        if (drawable == null && !resName.equals(suffixName)) {
             return getDrawable2(resName);
         }
         return drawable;
@@ -240,38 +289,57 @@ public class ResourceManager {
 
     private Drawable getDrawable2(String resName) {
         try {
+            Drawable result = null;
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_DRAWABLE, mPluginPackageName);
             if (resId == 0) {
-                resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_MIPMAP, mPluginPackageName);
-            }
-            if (resId == 0) {
-                resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
-            }
-
-            if (resId == 0)
-                return null;
-
-            Drawable result = null;
-            if (Build.VERSION.SDK_INT >= 21) {
-                result = mResources.getDrawable(resId, null);
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_DRAWABLE, mContext.getPackageName());
+                if (resId != 0) {
+                    return ContextCompat.getDrawable(mContext, resId);
+                }
             } else {
-                result = mResources.getDrawable(resId);
+                if (Build.VERSION.SDK_INT >= 21) {
+                    return mResources.getDrawable(resId, null);
+                } else {
+                    return mResources.getDrawable(resId);
+                }
             }
+            return null;
+//            if (resId == 0) {
+//                resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_MIPMAP, mPluginPackageName);
+//            }
+//            if (resId == 0) {
+//                resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_COLOR, mPluginPackageName);
+//            }
+//
+//            if (resId == 0)
+//                return null;
 
-            if (result == null) {
-                result = ContextCompat.getDrawable(mContext, resId);
-            }
-            return result;
+//            Drawable result = null;
+//            if (Build.VERSION.SDK_INT >= 21) {
+//                result = mResources.getDrawable(resId, null);
+//            } else {
+//                result = mResources.getDrawable(resId);
+//            }
+//
+//            if (result == null) {
+//                result = ContextCompat.getDrawable(mContext, resId);
+//            }
+//            return result;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    public CharSequence getText(@StringRes int id) {
+        String entryName = SkinUtil.getResourceEntryName(mContext, id);
+        return getText(entryName);
+    }
+
     public CharSequence getText(String resName) {
         String suffixName = appendSuffix(resName);
         CharSequence text = getText2(suffixName);
-        if (text == null) {
+        if (text == null && !resName.equals(suffixName)) {
             return getText2(resName);
         }
         return text;
@@ -280,15 +348,15 @@ public class ResourceManager {
     private CharSequence getText2(String resName) {
         try {
             int resId = mResources.getIdentifier(resName, SkinConst.RES_TYPE_NAME_STRING, mPluginPackageName);
-            if (resId == 0)
-                return null;
-
-            try {
+            if (resId == 0) {
+                resId = mContext.getResources().getIdentifier(resName, SkinConst.RES_TYPE_NAME_STRING, mContext.getPackageName());
+                if (resId != 0) {
+                    return mContext.getResources().getText(resId);
+                }
+            } else {
                 return mResources.getText(resId);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return mContext.getResources().getText(resId);
             }
+            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

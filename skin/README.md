@@ -48,6 +48,11 @@
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
+  ## beta v1.1.6-bata
+     * 去掉library层自动保存换肤参数，这一层的实现应该由客户端业务层逻辑实现。
+
+  ## beta v1.1.6-bata
+        完善SkinResourceManager的资源获取
   ## beta v1.1.4-beta
      * 新增在解析布局文件时，如果ui符合换肤规则，在创建view的时候主动执行应用换肤属性，以解决某些兼容属性不生效问题（例如drawableTint）的方法
      调用SkinManager#setApplySkinAttrWhenCreateSkinView(boolean value)使设置生效

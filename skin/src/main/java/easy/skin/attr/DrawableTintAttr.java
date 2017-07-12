@@ -4,10 +4,12 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.view.View;
 import android.widget.TextView;
 
 import easy.skin.SkinManager;
+import easy.skin.util.SkinUtil;
 
 /**
  * Created by Lucio on 17/5/22.
@@ -41,14 +43,14 @@ public class DrawableTintAttr extends SkinAttr {
     }
 
     private Drawable tintDrawable(Drawable drawable, ColorStateList color) {
-        if (drawable == null)
-            return null;
-
-        Drawable d1 = drawable.mutate();
-        d1.setBounds(drawable.copyBounds());
-        DrawableCompat.setTintList(d1, color);
-//        d1.setColorFilter(color.getDefaultColor(), PorterDuff.Mode.SRC_ATOP);
-        return d1;
+        return SkinUtil.tintDrawable(drawable,color);
+//        if (drawable == null)
+//            return null;
+//
+//        Drawable d1 = drawable.mutate();
+//
+//        DrawableCompat.setTintList(d1, color);
+//        return d1;
     }
 
     private static DrawableTintAttr newInstance() {
