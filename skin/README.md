@@ -48,6 +48,8 @@
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
 
+  ## beta v1.2.0-beta
+     * fix imageview tint属性的处理，如果程序要在5.0版本以前支持imageview的tint属性，只需要自定义tint属性，并将控件的android:tint更改为app:tint即可支持
   ## beta v1.1.6-bata
      * 去掉library层自动保存换肤参数，这一层的实现应该由客户端业务层逻辑实现。
 
