@@ -2,6 +2,7 @@ package easy.skin.attr;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import easy.skin.util.SkinUtil;
 /**
  * Created by Lucio on 17/5/3.
  * ImageView src tint支持
+ * 如果要在5.0之前使用此属性，需要不xml中android:tint更换为app:tint
  */
 
 public class ImageViewSrcTintAttr extends SkinAttr {
@@ -38,7 +40,7 @@ public class ImageViewSrcTintAttr extends SkinAttr {
      * @return
      */
     public boolean setTintList(ImageView view, ColorStateList color) {
-        return SkinUtil.setTintList(view,color);
+        return SkinUtil.setTintList(view, color);
     }
 
 

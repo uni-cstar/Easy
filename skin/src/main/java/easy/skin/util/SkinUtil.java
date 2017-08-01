@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.AnyRes;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -23,7 +24,11 @@ public class SkinUtil {
             return null;
 
         Drawable d1 = drawable.mutate();
+        //必须包装才能在低版本上进行渲染
         d1 = DrawableCompat.wrap(d1);
+        //调用setCompoundDrawables 必须设置drawable的bounds
+        d1.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        //渲染
         DrawableCompat.setTintList(d1, color);
         if (d1.isStateful()) {
             d1.setState(drawable.getState());

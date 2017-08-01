@@ -1,4 +1,5 @@
-# Skin
+# Skin latestVersion = 1.2.2-beta
+
   Skin是一款提供在Android开发中实现动态快速切换皮肤的库。
 
   ## 感谢
