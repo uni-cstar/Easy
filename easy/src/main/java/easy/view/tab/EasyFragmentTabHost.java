@@ -111,7 +111,7 @@ public class EasyFragmentTabHost extends EasyTabHost implements EasyTabHost.OnEa
             if (info.fragment != null && !info.fragment.isDetached()) {
                 FragmentTransaction ft = mFragmentManager.beginTransaction();
                 ft.detach(info.fragment);
-                ft.commit();
+                ft.commitAllowingStateLoss();
             }
         }
 
@@ -165,7 +165,7 @@ public class EasyFragmentTabHost extends EasyTabHost implements EasyTabHost.OnEa
         String tabTag = getCurrentTabTag(index);
         FragmentTransaction ft = doTabChanged(tabTag, null);
         if (ft != null) {
-            ft.commit();
+            ft.commitAllowingStateLoss();
         }
         if (mOnTabChangeListener != null) {
             mOnTabChangeListener.onEasyTabSelected(index);
@@ -206,7 +206,7 @@ public class EasyFragmentTabHost extends EasyTabHost implements EasyTabHost.OnEa
         mAttached = true;
         ft = doTabChanged(currentTab, ft);
         if (ft != null) {
-            ft.commit();
+            ft.commitAllowingStateLoss();
             mFragmentManager.executePendingTransactions();
         }
     }
