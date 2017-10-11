@@ -91,11 +91,10 @@ public class EasyTabHost extends LinearLayout {
         EasyGesture.addTapGesture(view, new SimpleTabSelectListener(mSelectListener, mTabWidget.getChildCount()));
         setupTabView(tabItem);
         mTabWidget.addView(view);
-
+        mTabItems.add(tabItem);
         if (mCurrentTab == -1) {
             setCurrentTab(0);
         }
-        mTabItems.add(tabItem);
     }
 
     //初始化tabview 参数
