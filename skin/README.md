@@ -44,7 +44,10 @@
     compile 'ms.easy:skin:1.2.3'
    ```
 
-    如有问题，可联系：QQ862638161
+[具体使用请见Wiki](https://github.com/SupLuo/Easy/wiki/Skin-%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B)
+如有问题，可联系QQ：862638161
+    
+
 
 来个图直观感受一下。<br/>
 ![img](https://github.com/SupLuo/Easy/blob/master/skin/sample_iamge.gif?raw=true)
